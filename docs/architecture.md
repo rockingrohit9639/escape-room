@@ -21,7 +21,7 @@
 
 What I am thinking is, there can be multiple types of assets in a room. Then each asset will have some interactions
 and based on those interactions some kind of action will be performed (should I allow multiple actions on single asset?).
-The events can be
+Can I merge elements and assets together ?
 
 ## Events
 
