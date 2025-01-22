@@ -1,9 +1,7 @@
-import NxWelcome from './nx-welcome';
-
 export function App() {
   return (
-    <div>
-      <NxWelcome title="client" />
+    <div className="h-screen w-full flex items-center text-center justify-center">
+      This is app.
     </div>
   );
 }
