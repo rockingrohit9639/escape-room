@@ -1,7 +1,7 @@
 import { authContract } from '@escape-room/contracts';
 import { NestRequestShapes, NestResponseShapes } from '@ts-rest/nest';
 
-export type SessionPayload = {
+export type SessionUser = {
   id: string;
   email: string;
 };

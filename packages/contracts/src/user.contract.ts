@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { client } from './lib/client';
 
 export const userSchema = z.object({
   id: z.string(),
@@ -11,3 +12,16 @@ export const userSchema = z.object({
     .max(255)
     .trim(),
 });
+
+export const userContract = client.router(
+  {
+    me: {
+      method: 'GET',
+      path: '/me',
+      responses: {
+        200: userSchema.omit({ password: true }),
+      },
+    },
+  },
+  { pathPrefix: '/user' }
+);
