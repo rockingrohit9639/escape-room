@@ -7,11 +7,11 @@ Stages are structured sequentially, meaning players must complete the current st
 # Possible schema of Stage
 
 ```ts
-const stageBackground = z.discriminatedUnion("type", [
-  z.object({ type: "IMAGE", url: z.string() }),
-  z.object({ type: "VIDEO", url: z.string() }),
-  z.object({ type: "COLOR", value: z.string().startsWith("#").length(7) }),
-]);
+const stageBackground = z.discriminatedUnion('type', [
+  z.object({ type: 'IMAGE', url: z.string() }),
+  z.object({ type: 'VIDEO', url: z.string() }),
+  z.object({ type: 'COLOR', value: z.string().startsWith('#').length(7) }),
+])
 
 const stage = z.object({
   id: z.string(),
@@ -23,5 +23,5 @@ const stage = z.object({
   objects: z.array(stageObject),
   order: z.number(),
   onFinish: interaction,
-});
+})
 ```

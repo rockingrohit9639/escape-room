@@ -1,6 +1,6 @@
-import { client } from './lib/client';
-import { z } from 'zod';
-import { userSchema } from './user.contract';
+import { client } from './lib/client'
+import { z } from 'zod'
+import { userSchema } from './user.contract'
 
 export const authContract = client.router(
   {
@@ -26,5 +26,5 @@ export const authContract = client.router(
       },
     },
   },
-  { pathPrefix: '/auth' }
-);
+  { pathPrefix: '/auth' },
+)

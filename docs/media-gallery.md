@@ -8,9 +8,9 @@ The Media Gallery is a public library that allows game creators to upload, manag
 const galleryItem = z.object({
   id: z.string(),
   name: z.string(),
-  type: z.enum(["image", "video", "audio"]),
+  type: z.enum(['image', 'video', 'audio']),
   url: z.string(),
   size: z.number(),
   isPublic: z.boolean().optional().default(true),
-});
+})
 ```

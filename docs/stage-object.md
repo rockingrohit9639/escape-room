@@ -16,43 +16,37 @@ const baseObject = z.object({
   disabled: z.boolean(), // no-interactions if object is disabled
   isDraggable: z.boolean().optional().default(false),
   isDroppable: z.boolean().optional().default(false),
-});
+})
 
 const imageObject = baseObject.extend({
-  type: z.literal("IMAGE"),
+  type: z.literal('IMAGE'),
   url: z.string().url(),
-});
+})
 
 const videoObject = baseObject.extend({
-  type: z.literal("VIDEO"),
+  type: z.literal('VIDEO'),
   url: z.string().url(),
   thumbnail: z.string().url().optional(), // element rendered on the canvas to trigger play or in can be trigger by Interaction
-});
+})
 
 const audioObject = baseObject.extend({
-  type: z.literal("VIDEO"),
+  type: z.literal('VIDEO'),
   url: z.string().url(),
   thumbnail: z.string().optional(), // element rendered on the screen to trigger play or in can be trigger by Interaction
-});
+})
 
 const textObject = baseObject.extend({
-  type: z.literal("TEXT"),
+  type: z.literal('TEXT'),
   text: z.string().min(1),
   style: z.object({ ...someCssProperties }),
-});
+})
 
 const sliderObject = baseObject.extend({
-  type: z.literal("SLIDER"),
+  type: z.literal('SLIDER'),
   min: z.number(),
   max: z.number(),
   step: z.number().optional().default(1),
-});
+})
 
-const stageObject = z.discriminatedUnion("type", [
-  imageObject,
-  videoObject,
-  audioObject,
-  textObject,
-  sliderObject,
-]);
+const stageObject = z.discriminatedUnion('type', [imageObject, videoObject, audioObject, textObject, sliderObject])
 ```

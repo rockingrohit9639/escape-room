@@ -5,29 +5,23 @@ In an interactive escape room builder, events are actions that happen when a pla
 # Possible schema for Interaction
 
 ```ts
-const event = z.enum([
-  "CLICK",
-  "DOUBLE_CLICK",
-  "MOUSE_ENTER",
-  "MOUSE_LEAVE",
-  "HOLD",
-]);
+const event = z.enum(['CLICK', 'DOUBLE_CLICK', 'MOUSE_ENTER', 'MOUSE_LEAVE', 'HOLD'])
 
 const showObjectAction = z.object({
   event,
-  action: z.literal("SHOW_OBJECT"),
+  action: z.literal('SHOW_OBJECT'),
   object: z.string(), // id of the object
-});
+})
 
 const hideObjectAction = z.object({
   event,
-  action: z.literal("HIDE_OBJECT"),
+  action: z.literal('HIDE_OBJECT'),
   object: z.string(), // id of the object
-});
+})
 
 const changeObjectPropertiesAction = z.object({
   event,
-  action: z.literal("CHANGE_OBJECT_PROPERTIES"),
+  action: z.literal('CHANGE_OBJECT_PROPERTIES'),
   newProperties: z.object({
     x: z.number().optional(),
     y: z.number().optional(),
@@ -37,33 +31,33 @@ const changeObjectPropertiesAction = z.object({
     scaleX: z.number().optional(),
     scaleY: z.number().optional(),
   }),
-});
+})
 
 const playMediaAction = z.object({
   event,
-  action: z.literal("PLAY_MEDIA"),
+  action: z.literal('PLAY_MEDIA'),
   object: z.string(), // id of video/audio object only
-});
+})
 
 const showMessageAction = z.object({
   event,
-  action: z.literal("SHOW_MESSAGE"),
+  action: z.literal('SHOW_MESSAGE'),
   message: z.string(),
-  type: z.enum(["success", "error", "info"]),
-});
+  type: z.enum(['success', 'error', 'info']),
+})
 
 const triggerCutsceneAction = z.object({
   event,
-  action: z.literal("TRIGGER_CUTSCENE"),
+  action: z.literal('TRIGGER_CUTSCENE'),
   video: z.string(), // id of the video object only (will be played full screen to proceed in the story)
-});
+})
 
 const finishStageActioin = z.object({
   event,
-  action: z.literal("FINISH_STAGE"),
-});
+  action: z.literal('FINISH_STAGE'),
+})
 
-const interaction = z.discriminatedUnion("action", [
+const interaction = z.discriminatedUnion('action', [
   showObjectAction,
   hideObjectAction,
   changeObjectPropertiesAction,
@@ -71,5 +65,5 @@ const interaction = z.discriminatedUnion("action", [
   showMessageAction,
   triggerCutsceneAction,
   finishStageAction,
-]);
+])
 ```

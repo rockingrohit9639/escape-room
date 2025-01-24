@@ -1,4 +1,4 @@
-const nx = require('@nx/eslint-plugin');
+const nx = require('@nx/eslint-plugin')
 
 module.exports = [
   ...nx.configs['flat/base'],
@@ -26,15 +26,8 @@ module.exports = [
     },
   },
   {
-    files: [
-      '**/*.ts',
-      '**/*.tsx',
-      '**/*.js',
-      '**/*.jsx',
-      '**/*.cjs',
-      '**/*.mjs',
-    ],
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.cjs', '**/*.mjs'],
     // Override or add rules here
     rules: {},
   },
-];
+]

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(8000),
@@ -7,10 +7,10 @@ const envSchema = z.object({
   CORS_ORIGIN: z.union([z.string(), z.boolean()]).default(true),
   SESSION_SECRET: z.string().min(1),
   SESSION_COOKIE_MAX_AGE: z.coerce.number(),
-});
+})
 
-export type Env = z.infer<typeof envSchema>;
+export type Env = z.infer<typeof envSchema>
 
 export function validate(config: Record<string, unknown>) {
-  return envSchema.parse(config);
+  return envSchema.parse(config)
 }

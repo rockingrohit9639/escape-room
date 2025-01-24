@@ -1,7 +1,6 @@
-const nx = require('@nx/eslint-plugin');
-const baseConfig = require('../../eslint.config.cjs');
-const pluginQuery = require("@tanstack/eslint-plugin-query")
-
+const nx = require('@nx/eslint-plugin')
+const baseConfig = require('../../eslint.config.cjs')
+const pluginQuery = require('@tanstack/eslint-plugin-query')
 
 module.exports = [
   ...baseConfig,
@@ -12,4 +11,4 @@ module.exports = [
     // Override or add rules here
     rules: {},
   },
-];
+]
