@@ -4,27 +4,26 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
-  Logger,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
-    const origin = request.headers.origin;
 
-    const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let errors: unknown;
 
-    Logger.log({ exception, origin });
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      errors = exception.getResponse();
+    }
 
     response.status(status).json({
-      error: exception.message,
+      message: exception.message,
+      errors,
     });
   }
 }
