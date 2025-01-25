@@ -17,7 +17,7 @@
     "build": {
       "executor": "@nx/vite:build",
       "options": {
-        "outputPath": "dist/apps/my-app"
+        "outputPath": "dist/apps/client"
       }
     }
   }
