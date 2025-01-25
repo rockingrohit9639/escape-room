@@ -1,8 +1,20 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { Card, CardContent } from '~/components/ui/card'
+import { apiClient } from '~/lib/client'
+import { CURRENT_USER_QUERY_KEY } from '~/lib/constants'
 
 export const Route = createFileRoute('/_auth')({
   component: AuthLayout,
+  loader: async ({ context }) => {
+    const user = await context.queryClient.ensureQueryData({
+      queryKey: CURRENT_USER_QUERY_KEY,
+      queryFn: () => apiClient.user.me.query(),
+    })
+
+    if (user.status === 200) {
+      throw redirect({ to: '/' })
+    }
+  },
 })
 
 function AuthLayout() {

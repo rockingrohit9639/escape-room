@@ -9,7 +9,7 @@ export const authContract = client.router(
       path: '/login',
       body: userSchema.pick({ email: true, password: true }),
       responses: {
-        200: z.object({ success: z.boolean() }),
+        200: z.object({ user: userSchema.omit({ password: true }) }),
       },
     },
     signup: {

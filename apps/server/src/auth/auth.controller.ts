@@ -3,8 +3,9 @@ import { Controller, Req, UseGuards } from '@nestjs/common'
 import { nestControllerContract, TsRest, TsRestRequest } from '@ts-rest/nest'
 import { AuthService } from './auth.service'
 import { AuthGuard } from './guards/auth.guard'
-import { AuthRequestShapes, AuthResponseShapes } from './auth.types'
+import { AuthRequestShapes, AuthResponseShapes, SessionUser } from './auth.types'
 import { Request } from 'express'
+import { User } from '../user/user.decorator'
 
 const c = nestControllerContract(authContract)
 
@@ -14,8 +15,8 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @TsRest(c.login)
-  async login(): Promise<AuthResponseShapes['login']> {
-    return this.authService.login()
+  async login(@User() user: SessionUser): Promise<AuthResponseShapes['login']> {
+    return this.authService.login(user)
   }
 
   @TsRest(c.signup)

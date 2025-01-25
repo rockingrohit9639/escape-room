@@ -1,13 +1,14 @@
 import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
-import { AuthRequestShapes, AuthResponseShapes } from './auth.types'
+import { AuthRequestShapes, AuthResponseShapes, SessionUser } from './auth.types'
 import * as bcrypt from 'bcrypt'
 import { Request } from 'express'
 import { promisify } from '../lib/promisify'
+import { UserService } from '../user/user.service'
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService, private readonly userService: UserService) {}
 
   async validateUser(email: string, password: string) {
     const user = await this.prisma.user.findUnique({
@@ -35,8 +36,14 @@ export class AuthService {
     }
   }
 
-  async login(): Promise<AuthResponseShapes['login']> {
-    return { status: HttpStatus.OK, body: { success: true } }
+  async login(user: SessionUser): Promise<AuthResponseShapes['login']> {
+    const userFound = await this.userService.me(user)
+    return {
+      status: HttpStatus.OK,
+      body: {
+        user: userFound.body,
+      },
+    }
   }
 
   async signup(body: AuthRequestShapes['signup']['body'], request: Request): Promise<AuthResponseShapes['signup']> {
