@@ -42,12 +42,15 @@ function Login() {
   function handleLogin(body: LoginSchema) {
     loginMutation.mutate({ body })
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleLogin)} className="grid grid-cols-1 gap-4 p-4">
         <div>
           <h1 className="text-2xl font-bold">Return to the Quest</h1>
-          <p className="text-muted-foreground">Your journey awaits—unlock your progress and resume the escape.</p>
+          <p className="text-muted-foreground font-secondary">
+            Your journey awaits—unlock your progress and resume the escape.
+          </p>
         </div>
 
         <FormField
