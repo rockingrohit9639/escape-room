@@ -18,6 +18,7 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as AppImport } from './routes/_app'
 import { Route as IndexImport } from './routes/index'
 import { Route as BuilderIndexImport } from './routes/builder/index'
+import { Route as BuilderRoomsIndexImport } from './routes/builder/rooms/index'
 
 // Create Virtual Routes
 
@@ -65,6 +66,12 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/login.lazy').then((d) => d.Route))
+
+const BuilderRoomsIndexRoute = BuilderRoomsIndexImport.update({
+  id: '/rooms/',
+  path: '/rooms/',
+  getParentRoute: () => BuilderRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -119,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuilderIndexImport
       parentRoute: typeof BuilderImport
     }
+    '/builder/rooms/': {
+      id: '/builder/rooms/'
+      path: '/rooms'
+      fullPath: '/builder/rooms'
+      preLoaderRoute: typeof BuilderRoomsIndexImport
+      parentRoute: typeof BuilderImport
+    }
   }
 }
 
@@ -138,10 +152,12 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface BuilderRouteChildren {
   BuilderIndexRoute: typeof BuilderIndexRoute
+  BuilderRoomsIndexRoute: typeof BuilderRoomsIndexRoute
 }
 
 const BuilderRouteChildren: BuilderRouteChildren = {
   BuilderIndexRoute: BuilderIndexRoute,
+  BuilderRoomsIndexRoute: BuilderRoomsIndexRoute,
 }
 
 const BuilderRouteWithChildren =
@@ -154,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginLazyRoute
   '/signup': typeof AuthSignupLazyRoute
   '/builder/': typeof BuilderIndexRoute
+  '/builder/rooms': typeof BuilderRoomsIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -162,6 +179,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginLazyRoute
   '/signup': typeof AuthSignupLazyRoute
   '/builder': typeof BuilderIndexRoute
+  '/builder/rooms': typeof BuilderRoomsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -173,13 +191,21 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginLazyRoute
   '/_auth/signup': typeof AuthSignupLazyRoute
   '/builder/': typeof BuilderIndexRoute
+  '/builder/rooms/': typeof BuilderRoomsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/builder' | '/login' | '/signup' | '/builder/'
+  fullPaths:
+    | '/'
+    | ''
+    | '/builder'
+    | '/login'
+    | '/signup'
+    | '/builder/'
+    | '/builder/rooms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/login' | '/signup' | '/builder'
+  to: '/' | '' | '/login' | '/signup' | '/builder' | '/builder/rooms'
   id:
     | '__root__'
     | '/'
@@ -189,6 +215,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/signup'
     | '/builder/'
+    | '/builder/rooms/'
   fileRoutesById: FileRoutesById
 }
 
@@ -238,7 +265,8 @@ export const routeTree = rootRoute
     "/builder": {
       "filePath": "builder.tsx",
       "children": [
-        "/builder/"
+        "/builder/",
+        "/builder/rooms/"
       ]
     },
     "/_auth/login": {
@@ -251,6 +279,10 @@ export const routeTree = rootRoute
     },
     "/builder/": {
       "filePath": "builder/index.tsx",
+      "parent": "/builder"
+    },
+    "/builder/rooms/": {
+      "filePath": "builder/rooms/index.tsx",
       "parent": "/builder"
     }
   }

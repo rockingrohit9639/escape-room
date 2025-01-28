@@ -28,3 +28,44 @@ model Session {
   data      String
   expiresAt DateTime
 }
+
+enum RoomDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum RoomStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum RoomVisibility {
+  PRIVATE
+  PUBLIC
+}
+
+model EscapeRoom {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  label       String
+  description String
+  difficulty  RoomDifficulty
+  status      RoomStatus     @default(DRAFT)
+  visibility  RoomVisibility @default(PUBLIC)
+  password    String? // a private room will have a passowrd
+
+  tags   RoomTag[] @relation(fields: [tagIds], references: [id])
+  tagIds String[]  @db.ObjectId
+}
+
+model RoomTag {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String
+
+  rooms   EscapeRoom[] @relation(fields: [roomIds], references: [id])
+  roomIds String[]     @db.ObjectId
+}
