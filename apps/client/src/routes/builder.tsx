@@ -1,10 +1,10 @@
 import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router'
+import { ImagesIcon, LayoutDashboardIcon } from 'lucide-react'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from '~/components/ui/breadcrumb'
 import { Separator } from '~/components/ui/separator'
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
@@ -81,21 +81,36 @@ function Header() {
   )
 }
 
+const MENU_ITEMS = [
+  {
+    to: '/builder',
+    Icon: LayoutDashboardIcon,
+    label: 'Dashboard',
+  },
+  {
+    to: '/gallery',
+    Icon: ImagesIcon,
+    label: 'Gallery',
+  },
+]
+
 function NavigationMenu() {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Builder</SidebarGroupLabel>
       <SidebarMenu>
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild>
-            <Link to="/builder">Dashboard</Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild>
-            <Link to="/builder">Gallery</Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
+        {MENU_ITEMS.map((item) => (
+          <SidebarMenuItem>
+            <Link to={item.to}>
+              {({ isActive }) => (
+                <SidebarMenuButton isActive={isActive} tooltip={item.label}>
+                  <item.Icon />
+                  <span>{item.label}</span>
+                </SidebarMenuButton>
+              )}
+            </Link>
+          </SidebarMenuItem>
+        ))}
       </SidebarMenu>
     </SidebarGroup>
   )
