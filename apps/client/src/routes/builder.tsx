@@ -91,7 +91,7 @@ const MENU_ITEMS = [
     label: 'Dashboard',
   },
   {
-    to: '/builder/rooms',
+    to: '/builder/escape-room',
     Icon: PuzzleIcon,
     label: 'Your Rooms',
   },
@@ -109,14 +109,12 @@ function NavigationMenu() {
       <SidebarMenu>
         {MENU_ITEMS.map((item) => (
           <SidebarMenuItem>
-            <Link to={item.to}>
-              {({ isActive }) => (
-                <SidebarMenuButton isActive={isActive} tooltip={item.label}>
-                  <item.Icon />
-                  <span>{item.label}</span>
-                </SidebarMenuButton>
-              )}
-            </Link>
+            <SidebarMenuButton asChild tooltip={item.label}>
+              <Link to={item.to}>
+                <item.Icon />
+                <span>{item.label}</span>
+              </Link>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         ))}
       </SidebarMenu>

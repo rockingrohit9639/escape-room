@@ -18,7 +18,8 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as AppImport } from './routes/_app'
 import { Route as IndexImport } from './routes/index'
 import { Route as BuilderIndexImport } from './routes/builder/index'
-import { Route as BuilderRoomsIndexImport } from './routes/builder/rooms/index'
+import { Route as BuilderEscapeRoomIndexImport } from './routes/builder/escape-room/index'
+import { Route as BuilderEscapeRoomNewImport } from './routes/builder/escape-room/new'
 
 // Create Virtual Routes
 
@@ -67,9 +68,15 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/login.lazy').then((d) => d.Route))
 
-const BuilderRoomsIndexRoute = BuilderRoomsIndexImport.update({
-  id: '/rooms/',
-  path: '/rooms/',
+const BuilderEscapeRoomIndexRoute = BuilderEscapeRoomIndexImport.update({
+  id: '/escape-room/',
+  path: '/escape-room/',
+  getParentRoute: () => BuilderRoute,
+} as any)
+
+const BuilderEscapeRoomNewRoute = BuilderEscapeRoomNewImport.update({
+  id: '/escape-room/new',
+  path: '/escape-room/new',
   getParentRoute: () => BuilderRoute,
 } as any)
 
@@ -126,11 +133,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuilderIndexImport
       parentRoute: typeof BuilderImport
     }
-    '/builder/rooms/': {
-      id: '/builder/rooms/'
-      path: '/rooms'
-      fullPath: '/builder/rooms'
-      preLoaderRoute: typeof BuilderRoomsIndexImport
+    '/builder/escape-room/new': {
+      id: '/builder/escape-room/new'
+      path: '/escape-room/new'
+      fullPath: '/builder/escape-room/new'
+      preLoaderRoute: typeof BuilderEscapeRoomNewImport
+      parentRoute: typeof BuilderImport
+    }
+    '/builder/escape-room/': {
+      id: '/builder/escape-room/'
+      path: '/escape-room'
+      fullPath: '/builder/escape-room'
+      preLoaderRoute: typeof BuilderEscapeRoomIndexImport
       parentRoute: typeof BuilderImport
     }
   }
@@ -152,12 +166,14 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface BuilderRouteChildren {
   BuilderIndexRoute: typeof BuilderIndexRoute
-  BuilderRoomsIndexRoute: typeof BuilderRoomsIndexRoute
+  BuilderEscapeRoomNewRoute: typeof BuilderEscapeRoomNewRoute
+  BuilderEscapeRoomIndexRoute: typeof BuilderEscapeRoomIndexRoute
 }
 
 const BuilderRouteChildren: BuilderRouteChildren = {
   BuilderIndexRoute: BuilderIndexRoute,
-  BuilderRoomsIndexRoute: BuilderRoomsIndexRoute,
+  BuilderEscapeRoomNewRoute: BuilderEscapeRoomNewRoute,
+  BuilderEscapeRoomIndexRoute: BuilderEscapeRoomIndexRoute,
 }
 
 const BuilderRouteWithChildren =
@@ -170,7 +186,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginLazyRoute
   '/signup': typeof AuthSignupLazyRoute
   '/builder/': typeof BuilderIndexRoute
-  '/builder/rooms': typeof BuilderRoomsIndexRoute
+  '/builder/escape-room/new': typeof BuilderEscapeRoomNewRoute
+  '/builder/escape-room': typeof BuilderEscapeRoomIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -179,7 +196,8 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginLazyRoute
   '/signup': typeof AuthSignupLazyRoute
   '/builder': typeof BuilderIndexRoute
-  '/builder/rooms': typeof BuilderRoomsIndexRoute
+  '/builder/escape-room/new': typeof BuilderEscapeRoomNewRoute
+  '/builder/escape-room': typeof BuilderEscapeRoomIndexRoute
 }
 
 export interface FileRoutesById {
@@ -191,7 +209,8 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginLazyRoute
   '/_auth/signup': typeof AuthSignupLazyRoute
   '/builder/': typeof BuilderIndexRoute
-  '/builder/rooms/': typeof BuilderRoomsIndexRoute
+  '/builder/escape-room/new': typeof BuilderEscapeRoomNewRoute
+  '/builder/escape-room/': typeof BuilderEscapeRoomIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -203,9 +222,17 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/builder/'
-    | '/builder/rooms'
+    | '/builder/escape-room/new'
+    | '/builder/escape-room'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/login' | '/signup' | '/builder' | '/builder/rooms'
+  to:
+    | '/'
+    | ''
+    | '/login'
+    | '/signup'
+    | '/builder'
+    | '/builder/escape-room/new'
+    | '/builder/escape-room'
   id:
     | '__root__'
     | '/'
@@ -215,7 +242,8 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/signup'
     | '/builder/'
-    | '/builder/rooms/'
+    | '/builder/escape-room/new'
+    | '/builder/escape-room/'
   fileRoutesById: FileRoutesById
 }
 
@@ -266,7 +294,8 @@ export const routeTree = rootRoute
       "filePath": "builder.tsx",
       "children": [
         "/builder/",
-        "/builder/rooms/"
+        "/builder/escape-room/new",
+        "/builder/escape-room/"
       ]
     },
     "/_auth/login": {
@@ -281,8 +310,12 @@ export const routeTree = rootRoute
       "filePath": "builder/index.tsx",
       "parent": "/builder"
     },
-    "/builder/rooms/": {
-      "filePath": "builder/rooms/index.tsx",
+    "/builder/escape-room/new": {
+      "filePath": "builder/escape-room/new.tsx",
+      "parent": "/builder"
+    },
+    "/builder/escape-room/": {
+      "filePath": "builder/escape-room/index.tsx",
       "parent": "/builder"
     }
   }
