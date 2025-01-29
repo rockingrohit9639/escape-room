@@ -94,9 +94,9 @@ function CreateEscapeRoom() {
                   </SelectTrigger>
 
                   <SelectContent>
-                    {Object.entries(ESCAPE_ROOM_DIFFICULTY_MAP).map(([value, label]) => (
+                    {Object.entries(ESCAPE_ROOM_DIFFICULTY_MAP).map(([value, difficulty]) => (
                       <SelectItem key={value} value={value}>
-                        {label}
+                        {difficulty.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -120,9 +120,9 @@ function CreateEscapeRoom() {
                   </SelectTrigger>
 
                   <SelectContent>
-                    {Object.entries(ESCAPE_ROOM_VISIBILITY_MAP).map(([value, label]) => (
+                    {Object.entries(ESCAPE_ROOM_VISIBILITY_MAP).map(([value, visibility]) => (
                       <SelectItem key={value} value={value}>
-                        {label}
+                        {visibility.label}
                       </SelectItem>
                     ))}
                   </SelectContent>

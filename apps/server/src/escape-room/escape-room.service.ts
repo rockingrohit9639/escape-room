@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service'
 import { EscapeRoomRequestShapes, EscapeRoomResponseShapes } from './escape-room.types'
 import { SessionUser } from '../auth/auth.types'
 import { omit } from 'radash'
+import { escapeRoomContract } from '@escape-room/contracts'
 
 @Injectable()
 export class EscapeRoomService {
@@ -27,6 +28,17 @@ export class EscapeRoomService {
     return {
       status: HttpStatus.CREATED,
       body: { id: roomCreated.id },
+    }
+  }
+
+  async findAll(user: SessionUser): Promise<EscapeRoomResponseShapes['findAll']> {
+    const escapeRooms = await this.prisma.escapeRoom.findMany({
+      where: { createdById: user.id },
+    })
+
+    return {
+      status: HttpStatus.OK,
+      body: escapeRoomContract.findAll.responses['200'].parse(escapeRooms),
     }
   }
 }

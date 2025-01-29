@@ -1,6 +1,6 @@
 import { authContract } from './auth.contract'
 import { client } from './lib/client'
-import { escapeRoomContract, escapeRoomSchema } from './escape-room.contract'
+import { escapeRoomContract, ESCAPE_ROOM_DIFFICULTY, ESCAPE_ROOM_VISIBILITY } from './escape-room.contract'
 import { userContract, userSchema } from './user.contract'
 
 const contract = client.router({
@@ -9,4 +9,12 @@ const contract = client.router({
   escapeRoom: escapeRoomContract,
 })
 
-export { contract, authContract, userContract, userSchema, escapeRoomContract, escapeRoomSchema }
+export {
+  contract,
+  authContract,
+  userContract,
+  userSchema,
+  escapeRoomContract,
+  ESCAPE_ROOM_DIFFICULTY,
+  ESCAPE_ROOM_VISIBILITY,
+}

@@ -19,4 +19,9 @@ export class EscapeRoomController {
   ): Promise<EscapeRoomResponseShapes['new']> {
     return this.escapeRoomService.createNewRoom(body, user)
   }
+
+  @TsRest(c.findAll)
+  async findAll(@User() user: SessionUser): Promise<EscapeRoomResponseShapes['findAll']> {
+    return this.escapeRoomService.findAll(user)
+  }
 }
