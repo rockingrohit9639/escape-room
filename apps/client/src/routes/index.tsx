@@ -14,8 +14,8 @@ function Home() {
           <h1 className="text-2xl">Escape Room</h1>
 
           <div className="flex items-center gap-2">
-            <Link to="/builder" className={buttonVariants({})}>
-              Builder
+            <Link to="/dashboard" className={buttonVariants({})}>
+              Dashboard
             </Link>
 
             <ThemeToggler />

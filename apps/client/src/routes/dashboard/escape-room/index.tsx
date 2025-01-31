@@ -10,7 +10,7 @@ import { apiClient } from '~/lib/client'
 import { getErrorMessage } from '~/lib/error'
 import { ESCAPE_ROOM_DIFFICULTY_MAP, ESCAPE_ROOM_VISIBILITY_MAP } from '~/lib/escape-room'
 
-export const Route = createFileRoute('/builder/escape-room/')({
+export const Route = createFileRoute('/dashboard/escape-room/')({
   component: Rooms,
 })
 
@@ -20,7 +20,7 @@ function Rooms() {
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4">
       <Link
-        to="/builder/escape-room/new"
+        to="/dashboard/escape-room/new"
         className="col-span-2 h-auto border rounded-md p-4 flex items-center gap-2 border-dashed hover:bg-sidebar flex-col justify-center"
       >
         <PlusIcon />
@@ -45,13 +45,19 @@ function Rooms() {
                   <div className="flex items-center gap-2">
                     <div
                       className="border text-xs rounded-md px-2 py-1"
-                      style={{ borderColor: difficultyColor, color: difficultyColor }}
+                      style={{
+                        borderColor: difficultyColor,
+                        color: difficultyColor,
+                      }}
                     >
                       {escapeRoom.difficulty}
                     </div>
                     <div
                       className="border text-xs rounded-md px-2 py-1"
-                      style={{ borderColor: visibilityColor, color: visibilityColor }}
+                      style={{
+                        borderColor: visibilityColor,
+                        color: visibilityColor,
+                      }}
                     >
                       {escapeRoom.visibility}
                     </div>
@@ -59,7 +65,7 @@ function Rooms() {
                 </div>
                 <p className="text-muted-foreground mb-4">{escapeRoom.description}</p>
 
-                <Link to="/builder/escape-room">
+                <Link to="/dashboard">
                   <Button icon={<PencilIcon />}>Edit</Button>
                 </Link>
               </div>
