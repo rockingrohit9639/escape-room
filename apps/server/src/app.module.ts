@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module'
 import { UserModule } from './user/user.module'
 import { EscapeRoomModule } from './escape-room/escape-room.module'
 import { EscapeRoomTagModule } from './escape-room-tag/escape-room-tag.module'
+import { StageModule } from './stage/stage.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { EscapeRoomTagModule } from './escape-room-tag/escape-room-tag.module'
     UserModule,
     EscapeRoomModule,
     EscapeRoomTagModule,
+    StageModule,
   ],
   controllers: [],
   providers: [],
