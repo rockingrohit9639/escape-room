@@ -1,6 +1,5 @@
 import { stageContract } from '@escape-room/contracts'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useQueryClient } from '@tanstack/react-query'
 import { useParams, useRouter } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
