@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { client } from './lib/client'
+import { escapeRoomTagSchema } from './escape-room-tag.contract'
 
 export const ESCAPE_ROOM_DIFFICULTY = {
   EASY: 'EASY',
@@ -20,7 +21,7 @@ const baseEscapeRoom = z.object({
   label: z.string().min(1, 'Please enter your escape room name.'),
   description: z.string().min(10, 'Please describe your escape room.'),
   difficulty: difficultySchema,
-  tags: z.array(z.string()), // e.g. horror, adventure etc
+  tags: z.array(escapeRoomTagSchema), // e.g. horror, adventure etc
 })
 
 const roomSchema = z.discriminatedUnion('visibility', [

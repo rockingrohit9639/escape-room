@@ -95,7 +95,7 @@ function NavigationMenu() {
       <SidebarGroupLabel>Builder</SidebarGroupLabel>
       <SidebarMenu>
         {MENU_ITEMS.map((item) => (
-          <SidebarMenuItem>
+          <SidebarMenuItem key={item.to}>
             <SidebarMenuButton asChild tooltip={item.label}>
               <Link to={item.to}>
                 <item.Icon />

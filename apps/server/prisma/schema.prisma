@@ -58,16 +58,16 @@ model EscapeRoom {
   visibility  RoomVisibility @default(PUBLIC)
   password    String? // a private room will have a passowrd
 
-  tags        RoomTag[] @relation(fields: [tagIds], references: [id])
-  tagIds      String[]  @db.ObjectId
-  createdBy   User      @relation(fields: [createdById], references: [id])
-  createdById String    @db.ObjectId
+  tags        EscapeRoomTag[] @relation(fields: [tagIds], references: [id])
+  tagIds      String[]        @db.ObjectId
+  createdBy   User            @relation(fields: [createdById], references: [id])
+  createdById String          @db.ObjectId
 }
 
-model RoomTag {
+model EscapeRoomTag {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  name String
+  name String @unique
 
   rooms   EscapeRoom[] @relation(fields: [roomIds], references: [id])
   roomIds String[]     @db.ObjectId

@@ -20,7 +20,7 @@ export class EscapeRoomService {
         description: body.description,
         difficulty: body.difficulty,
         visibility: body.visibility,
-        tags: { connect: body.tags.map((tag) => ({ id: tag })) },
+        tags: { connect: body.tags.map((tag) => ({ id: tag.id })) },
         createdById: user.id,
       },
     })

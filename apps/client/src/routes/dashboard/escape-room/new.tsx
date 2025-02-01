@@ -5,31 +5,16 @@ import { ChevronLeftIcon, PuzzleIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import TagsSelector from '~/components/tags-selector'
 import { Button } from '~/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '~/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { Textarea } from '~/components/ui/textarea'
 import When from '~/components/when'
 import { apiClient } from '~/lib/client'
 import { handleError } from '~/lib/error'
-import {
-  ESCAPE_ROOM_DIFFICULTY_MAP,
-  ESCAPE_ROOM_VISIBILITY_MAP,
-} from '~/lib/escape-room'
+import { ESCAPE_ROOM_DIFFICULTY_MAP, ESCAPE_ROOM_VISIBILITY_MAP } from '~/lib/escape-room'
 
 export const Route = createFileRoute('/dashboard/escape-room/new')({
   component: CreateEscapeRoom,
@@ -55,11 +40,10 @@ function CreateEscapeRoom() {
     onError: handleError,
     onSuccess: ({ body }) => {
       toast.success('Success.', {
-        description:
-          'Escape room created successfully. You can start editing your escape room now.',
+        description: 'Escape room created successfully. You can start editing your escape room now.',
       })
 
-      navigate({ to: '/builder/escape-room' })
+      navigate({ to: '/builder/$escapeRoomId', params: { escapeRoomId: body.id } })
     },
   })
 
@@ -71,10 +55,7 @@ function CreateEscapeRoom() {
 
   return (
     <Form {...form}>
-      <form
-        className="p-4 grid gap-4"
-        onSubmit={form.handleSubmit(handleCreateNewRoom)}
-      >
+      <form className="p-4 grid gap-4" onSubmit={form.handleSubmit(handleCreateNewRoom)}>
         <FormField
           control={form.control}
           name="label"
@@ -82,10 +63,7 @@ function CreateEscapeRoom() {
             <FormItem>
               <FormLabel>Label</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter a name for your new escape room"
-                  {...field}
-                />
+                <Input placeholder="Enter a name for your new escape room" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -98,11 +76,7 @@ function CreateEscapeRoom() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
-                  rows={4}
-                  placeholder="Describe your escape room"
-                  {...field}
-                />
+                <Textarea rows={4} placeholder="Describe your escape room" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -121,13 +95,11 @@ function CreateEscapeRoom() {
                   </SelectTrigger>
 
                   <SelectContent>
-                    {Object.entries(ESCAPE_ROOM_DIFFICULTY_MAP).map(
-                      ([value, difficulty]) => (
-                        <SelectItem key={value} value={value}>
-                          {difficulty.label}
-                        </SelectItem>
-                      ),
-                    )}
+                    {Object.entries(ESCAPE_ROOM_DIFFICULTY_MAP).map(([value, difficulty]) => (
+                      <SelectItem key={value} value={value}>
+                        {difficulty.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -149,13 +121,11 @@ function CreateEscapeRoom() {
                   </SelectTrigger>
 
                   <SelectContent>
-                    {Object.entries(ESCAPE_ROOM_VISIBILITY_MAP).map(
-                      ([value, visibility]) => (
-                        <SelectItem key={value} value={value}>
-                          {visibility.label}
-                        </SelectItem>
-                      ),
-                    )}
+                    {Object.entries(ESCAPE_ROOM_VISIBILITY_MAP).map(([value, visibility]) => (
+                      <SelectItem key={value} value={value}>
+                        {visibility.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -172,11 +142,7 @@ function CreateEscapeRoom() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter secure password for your escape room"
-                    {...field}
-                  />
+                  <Input type="password" placeholder="Enter secure password for your escape room" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -184,20 +150,27 @@ function CreateEscapeRoom() {
           />
         </When>
 
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tags</FormLabel>
+              <FormControl>
+                <TagsSelector value={field.value} onChange={field.onChange} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <div className="flex items-center gap-4">
           <Link to=".." disabled={newEscapeRoomMutation.isPending}>
-            <Button
-              type="button"
-              variant="secondary"
-              icon={<ChevronLeftIcon />}
-            >
+            <Button type="button" variant="secondary" icon={<ChevronLeftIcon />}>
               Cancel
             </Button>
           </Link>
-          <Button
-            icon={<PuzzleIcon />}
-            loading={newEscapeRoomMutation.isPending}
-          >
+          <Button icon={<PuzzleIcon />} loading={newEscapeRoomMutation.isPending}>
             Create now
           </Button>
         </div>
