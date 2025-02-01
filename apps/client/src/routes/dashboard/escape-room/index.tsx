@@ -65,7 +65,7 @@ function Rooms() {
                 </div>
                 <p className="text-muted-foreground mb-4">{escapeRoom.description}</p>
 
-                <Link to="/dashboard">
+                <Link to="/builder/$escapeRoomId" params={{ escapeRoomId: escapeRoom.id }}>
                   <Button icon={<PencilIcon />}>Edit</Button>
                 </Link>
               </div>

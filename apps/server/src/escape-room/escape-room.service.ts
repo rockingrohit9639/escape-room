@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { EscapeRoomRequestShapes, EscapeRoomResponseShapes } from './escape-room.types'
 import { SessionUser } from '../auth/auth.types'
@@ -39,6 +39,24 @@ export class EscapeRoomService {
     return {
       status: HttpStatus.OK,
       body: escapeRoomContract.findAll.responses['200'].parse(escapeRooms),
+    }
+  }
+
+  async findOneById(
+    params: EscapeRoomRequestShapes['findOneById']['params'],
+    user: SessionUser,
+  ): Promise<EscapeRoomResponseShapes['findOneById']> {
+    const escapeRoom = await this.prisma.escapeRoom.findUnique({
+      where: { id: params.escapeRoomId, createdById: user.id },
+    })
+
+    if (!escapeRoom) {
+      throw new NotFoundException('Escape room not found.')
+    }
+
+    return {
+      status: 200,
+      body: escapeRoom,
     }
   }
 }

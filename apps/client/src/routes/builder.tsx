@@ -18,10 +18,5 @@ export const Route = createFileRoute('/builder')({
 })
 
 function Builder() {
-  return (
-    <div>
-      Hello "/builder"!
-      <Outlet />
-    </div>
-  )
+  return <Outlet />
 }

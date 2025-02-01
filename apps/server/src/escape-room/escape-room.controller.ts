@@ -24,4 +24,9 @@ export class EscapeRoomController {
   async findAll(@User() user: SessionUser): Promise<EscapeRoomResponseShapes['findAll']> {
     return this.escapeRoomService.findAll(user)
   }
+
+  @TsRest(c.findOneById)
+  async findOneById(@TsRestRequest() { params }: EscapeRoomRequestShapes['findOneById'], @User() user: SessionUser) {
+    return this.escapeRoomService.findOneById(params, user)
+  }
 }

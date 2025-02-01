@@ -1,8 +1,6 @@
 import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router'
 import { ImagesIcon, LayoutDashboardIcon, PuzzleIcon } from 'lucide-react'
 import RoomSearchForm from '~/components/builder/room-search-form'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from '~/components/ui/breadcrumb'
-import { Separator } from '~/components/ui/separator'
 import {
   Sidebar,
   SidebarContent,

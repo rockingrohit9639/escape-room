@@ -59,6 +59,21 @@ export const escapeRoomContract = client.router(
           .array(),
       },
     },
+    findOneById: {
+      method: 'GET',
+      path: '/:escapeRoomId',
+      pathParams: z.object({ escapeRoomId: z.string() }),
+      responses: {
+        200: z.object({
+          id: z.string(),
+          label: z.string(),
+          description: z.string(),
+          difficulty: difficultySchema,
+          visibility: visibilitySchema,
+          createdAt: z.coerce.date(),
+        }),
+      },
+    },
   },
   { pathPrefix: '/escape-room' },
 )

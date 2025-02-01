@@ -1,5 +1,6 @@
-import { CogIcon, DownloadIcon, RedoIcon, SaveIcon, ShareIcon, UndoIcon } from 'lucide-react'
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '~/components/ui/menubar'
+import { useLoaderData } from '@tanstack/react-router'
+import { ChevronDownIcon, SaveIcon, UploadIcon } from 'lucide-react'
+import { Button } from '~/components/ui/button'
 import { cn } from '~/lib/utils'
 
 type TopMenuProps = {
@@ -8,53 +9,31 @@ type TopMenuProps = {
 }
 
 export default function TopMenu({ className, style }: TopMenuProps) {
+  const { label } = useLoaderData({ from: '/builder/$escapeRoomId' })
+
   return (
-    <div className={cn('flex items-center justify-between gap-4', className)} style={style}>
-      <Menubar>
-        {/* File */}
-        <MenubarMenu>
-          <MenubarTrigger>File</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>
-              <SaveIcon className="size-4 mr-1" /> Save
-            </MenubarItem>
+    <div
+      className={cn(
+        'flex items-center justify-between gap-4 fixed top-0 left-0 border-b w-full h-16 px-6 z-50 bg-background',
+        className,
+      )}
+      style={style}
+    >
+      <div className="flex items-center gap-2">
+        <h1 className="text-2xl">Escape Room</h1>
+      </div>
 
-            <MenubarItem>
-              <DownloadIcon className="size-4 mr-1" />
-              Export
-            </MenubarItem>
-            <MenubarItem>
-              <ShareIcon className="size-4 mr-1" />
-              Share
-            </MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
+      <div className="flex items-center gap-2 cursor-pointer">
+        <p>{label}</p>
+        <ChevronDownIcon className="size-4" />
+      </div>
 
-        {/* Edit */}
-        <MenubarMenu>
-          <MenubarTrigger>Edit</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>
-              <UndoIcon className="size-4 mr-1" /> Undo
-            </MenubarItem>
-            <MenubarItem>
-              <RedoIcon className="size-4 mr-1" />
-              Redo
-            </MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-
-        {/* Settings */}
-        <MenubarMenu>
-          <MenubarTrigger>Settings</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>
-              <CogIcon className="size-4 mr-1" />
-              Settings
-            </MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-      </Menubar>
+      <div className="flex items-center gap-2">
+        <Button icon={<SaveIcon />}>Save</Button>
+        <Button icon={<UploadIcon />} variant="brand-outline">
+          Publish
+        </Button>
+      </div>
     </div>
   )
 }
