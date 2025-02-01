@@ -1,4 +1,6 @@
 import { cn } from '~/lib/utils'
+import StageGrid from './stage-grid'
+import CreateNewStage from './create-new-stage'
 
 type StageSidebarProps = {
   className?: string
@@ -7,8 +9,9 @@ type StageSidebarProps = {
 
 export default function StageSidebar({ className, style }: StageSidebarProps) {
   return (
-    <div className={cn(className)} style={style}>
-      Stage Sidebar
+    <div className={cn('p-4 size-full', className)} style={style}>
+      <CreateNewStage />
+      <StageGrid />
     </div>
   )
 }

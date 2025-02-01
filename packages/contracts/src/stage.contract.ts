@@ -21,7 +21,7 @@ export const stageSchema = z.object({
   label: z.string().min(1, 'Label is required.'),
   description: z.string().min(10, 'Please describe the stage.'),
   background: stageBackgroundSchema,
-  timeLimit: z.number().int(),
+  timeLimit: z.number().int().min(10),
   order: z.number(),
 })
 
@@ -31,7 +31,7 @@ export const stageContract = client.router(
       method: 'POST',
       path: '/:escapeRoomId',
       pathParams: z.object({ escapeRoomId: z.string() }),
-      body: stageSchema.omit({ id: true }),
+      body: stageSchema.omit({ id: true, order: true }),
       responses: {
         200: stageSchema,
       },

@@ -17,7 +17,7 @@ export class StageService {
         label: body.label,
         description: body.description,
         background: body.background,
-        order: body.order,
+        order: 0, // @TODO Calculate order
         timeLimit: body.timeLimit,
         escapeRoom: {
           connect: {

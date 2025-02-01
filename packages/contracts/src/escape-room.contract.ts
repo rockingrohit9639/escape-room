@@ -71,6 +71,7 @@ export const escapeRoomContract = client.router(
           description: z.string(),
           difficulty: difficultySchema,
           visibility: visibilitySchema,
+          stages: z.array(z.object({ id: z.string(), label: z.string() })),
           createdAt: z.coerce.date(),
         }),
       },

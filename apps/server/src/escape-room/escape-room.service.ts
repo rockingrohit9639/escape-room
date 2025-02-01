@@ -48,6 +48,14 @@ export class EscapeRoomService {
   ): Promise<EscapeRoomResponseShapes['findOneById']> {
     const escapeRoom = await this.prisma.escapeRoom.findUnique({
       where: { id: params.escapeRoomId, createdById: user.id },
+      include: {
+        stages: {
+          select: {
+            id: true,
+            label: true,
+          },
+        },
+      },
     })
 
     if (!escapeRoom) {
