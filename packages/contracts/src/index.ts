@@ -4,6 +4,7 @@ import { escapeRoomContract, ESCAPE_ROOM_DIFFICULTY, ESCAPE_ROOM_VISIBILITY } fr
 import { userContract, userSchema } from './user.contract'
 import { escapeRoomTagContract, escapeRoomTagSchema } from './escape-room-tag.contract'
 import { stageContract, stageSchema } from './stage.contract'
+import { fileContract } from './file.contract'
 
 const contract = client.router({
   auth: authContract,
@@ -11,6 +12,7 @@ const contract = client.router({
   escapeRoom: escapeRoomContract,
   escapeRoomTag: escapeRoomTagContract,
   stage: stageContract,
+  file: fileContract,
 })
 
 export {
@@ -24,4 +26,5 @@ export {
   escapeRoomTagSchema,
   stageContract,
   stageSchema,
+  fileContract,
 }

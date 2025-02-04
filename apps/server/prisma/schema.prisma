@@ -20,6 +20,7 @@ model User {
   salt     String
 
   sscapeRooms EscapeRoom[]
+  files       File[]
 }
 
 model Session {
@@ -87,4 +88,24 @@ model Stage {
 
   escapeRoom   EscapeRoom @relation(fields: [escapeRoomId], references: [id])
   escapeRoomId String     @db.ObjectId
+}
+
+enum FileVisibility {
+  PRIVATE
+  PUBLIC
+}
+
+model File {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  filename   String
+  bucket     String
+  mimetype   String
+  url        String
+  visibility FileVisibility @default(PUBLIC)
+
+  uploadedBy   User   @relation(fields: [uploadedById], references: [id])
+  uploadedById String @db.ObjectId
 }

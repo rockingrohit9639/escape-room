@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module'
 import { EscapeRoomModule } from './escape-room/escape-room.module'
 import { EscapeRoomTagModule } from './escape-room-tag/escape-room-tag.module'
 import { StageModule } from './stage/stage.module'
+import { FileModule } from './file/file.module'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StageModule } from './stage/stage.module'
     EscapeRoomModule,
     EscapeRoomTagModule,
     StageModule,
+    FileModule,
   ],
   controllers: [],
   providers: [],
