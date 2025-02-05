@@ -1,4 +1,11 @@
-import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common'
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  StreamableFile,
+} from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { SessionUser } from '../auth/auth.types'
 import { UploadFileArgs } from './file.types'
@@ -7,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 import { ConfigService } from '@nestjs/config'
 import { Env } from '../lib/env'
+import { FileVisibility } from '@prisma/client'
 
 @Injectable()
 export class FileService {
@@ -36,6 +44,7 @@ export class FileService {
           filename,
           mimetype: file.mimetype,
           uploadedById: user.id,
+          objectName,
           visibility,
           url: this.generateFileUrl(filename),
         },
@@ -50,7 +59,35 @@ export class FileService {
     }
   }
 
-  generateFileUrl(filename: string) {
+  async streamFile(filename: string, user: SessionUser) {
+    const file = await this.prisma.file.findUnique({
+      where: { filename },
+    })
+
+    if (!file) {
+      throw new NotFoundException('File not found')
+    }
+
+    /** Only allow PUBLIC files to be accessible by anyone */
+    if (file.visibility === FileVisibility.PRIVATE && file.uploadedById !== user.id) {
+      throw new ForbiddenException('You are not allowed to access this file.')
+    }
+
+    try {
+      const [fileMetadata, stream] = await Promise.all([
+        this.minioClient.statObject(file.bucket, file.objectName),
+        this.minioClient.getObject(file.bucket, file.objectName),
+      ])
+
+      const contentType = fileMetadata.metaData['content-type']
+      return new StreamableFile(stream, { type: contentType })
+    } catch (error) {
+      console.log(error)
+      throw new InternalServerErrorException('Something went wrong while sending file.')
+    }
+  }
+
+  private generateFileUrl(filename: string) {
     return `${this.configService.get('SERVER_URL')}/file/${filename}`
   }
 }

@@ -103,7 +103,8 @@ model File {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  filename   String
+  filename   String         @unique
+  objectName String
   bucket     String
   mimetype   String
   url        String
