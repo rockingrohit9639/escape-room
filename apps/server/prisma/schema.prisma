@@ -86,6 +86,9 @@ model Stage {
   timeLimit   Int // time in minutes
   order       Float // order of stage in a room
 
+  thumbnail   File   @relation(fields: [thumbnailId], references: [id], onDelete: Cascade)
+  thumbnailId String @unique @db.ObjectId
+
   escapeRoom   EscapeRoom @relation(fields: [escapeRoomId], references: [id])
   escapeRoomId String     @db.ObjectId
 }
@@ -108,4 +111,6 @@ model File {
 
   uploadedBy   User   @relation(fields: [uploadedById], references: [id])
   uploadedById String @db.ObjectId
+
+  stage Stage?
 }

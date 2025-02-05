@@ -22,7 +22,11 @@ export const stageSchema = z.object({
   description: z.string().min(10, 'Please describe the stage.'),
   background: stageBackgroundSchema,
   timeLimit: z.number().int().min(10),
+  thumbnail: z.object({ id: z.string(), url: z.string() }),
   order: z.number(),
+})
+export const newStageSchema = stageSchema.omit({ id: true, order: true, thumbnail: true }).extend({
+  thumbnail: z.instanceof(File, { message: 'Please upload thumbnail.' }),
 })
 
 export const stageContract = client.router(
@@ -30,8 +34,12 @@ export const stageContract = client.router(
     new: {
       method: 'POST',
       path: '/:escapeRoomId',
+      contentType: 'multipart/form-data',
       pathParams: z.object({ escapeRoomId: z.string() }),
-      body: stageSchema.omit({ id: true, order: true }),
+      /**
+       * Fortunately, we cannot upload files with application/json
+       */
+      body: client.type<{ thumbnail: File; stageData: string }>(),
       responses: {
         200: stageSchema,
       },

@@ -17,11 +17,17 @@ export class FileService {
   ) {}
 
   async uploadFile({ file, visibility, bucket = 'public' }: UploadFileArgs, user: SessionUser) {
-    const filename = uuidv4()
+    const ext = file.originalname.split('.').at(-1)
+    const filename = [uuidv4(), ext].join('.')
 
-    const objectName = [user.id, bucket, dayjs().format('DD/MM/YYYY'), filename].join('/')
+    const objectName = [user.id, dayjs().format('DD-MM-YYYY'), filename].join('/')
 
     try {
+      /* Create bucket if not exists */
+      if (!(await this.minioClient.bucketExists(bucket))) {
+        await this.minioClient.makeBucket(bucket)
+      }
+
       await this.minioClient.putObject(bucket, objectName, file.buffer, file.size, { visibility })
 
       const fileRecord = await this.prisma.file.create({
@@ -37,7 +43,8 @@ export class FileService {
       })
 
       return fileRecord
-    } catch {
+    } catch (error) {
+      console.log(error)
       await this.minioClient.removeObject(bucket, objectName)
       throw new InternalServerErrorException('Something went wrong while uploading file.')
     }

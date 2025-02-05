@@ -1,4 +1,4 @@
-import { stageContract } from '@escape-room/contracts'
+import { newStageSchema } from '@escape-room/contracts'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useParams, useRouter } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
@@ -15,13 +15,14 @@ import When from '~/components/when'
 import { apiClient } from '~/lib/client'
 import { handleError } from '~/lib/error'
 import { cn } from '~/lib/utils'
+import { omit } from 'radash'
 
 type CreateNewStageProps = {
   className?: string
   style?: React.CSSProperties
 }
 
-type CreateNewStageSchema = z.infer<typeof stageContract.new.body>
+type CreateNewStageSchema = z.infer<typeof newStageSchema>
 
 export default function CreateNewStage({ className, style }: CreateNewStageProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,7 +31,7 @@ export default function CreateNewStage({ className, style }: CreateNewStageProps
   const router = useRouter()
 
   const form = useForm<CreateNewStageSchema>({
-    resolver: zodResolver(stageContract.new.body),
+    resolver: zodResolver(newStageSchema),
     defaultValues: {
       label: '',
       description: '',
@@ -50,9 +51,14 @@ export default function CreateNewStage({ className, style }: CreateNewStageProps
 
   const bgType = form.watch('background.type')
 
-  // @TODO Add thumbnail
   function handleCreateNewStage(body: CreateNewStageSchema) {
-    createNewStageMutation.mutate({ body, params })
+    createNewStageMutation.mutate({
+      body: {
+        thumbnail: body.thumbnail,
+        stageData: JSON.stringify(omit(body, ['thumbnail'])),
+      },
+      params,
+    })
   }
 
   return (
@@ -165,6 +171,26 @@ export default function CreateNewStage({ className, style }: CreateNewStageProps
                 )}
               />
             </When>
+
+            <FormField
+              control={form.control}
+              name="thumbnail"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Thumbnail</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="file"
+                      accept=".png,.jpg,.jpeg"
+                      onChange={(event) => {
+                        field.onChange(event.target?.files?.[0])
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <Button loading={createNewStageMutation.isPending}>Create now</Button>
           </form>

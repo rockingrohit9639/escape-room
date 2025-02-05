@@ -6,8 +6,10 @@ import 'multer'
 export type FileRequestShapes = NestRequestShapes<typeof fileContract>
 export type FileResponseShapes = NestResponseShapes<typeof fileContract>
 
+export type FileBucket = 'public' | 'thumbnails'
+
 export type UploadFileArgs = {
   file: Express.Multer.File
   visibility: FileVisibility
-  bucket?: string
+  bucket?: FileBucket
 }

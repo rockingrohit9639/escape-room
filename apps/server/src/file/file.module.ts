@@ -24,5 +24,6 @@ import { Client } from 'minio'
       inject: [ConfigService],
     },
   ],
+  exports: [FileService],
 })
 export class FileModule {}
