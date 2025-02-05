@@ -1,4 +1,4 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common'
+import { BadRequestException, ForbiddenException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { SessionUser } from '../auth/auth.types'
 import { StageRequestShapes, StageResponseShapes } from './stage.types'
@@ -55,6 +55,26 @@ export class StageService {
     return {
       status: HttpStatus.OK,
       body: { id: stage.id },
+    }
+  }
+
+  async removeStage(stageId: string, user: SessionUser): Promise<StageResponseShapes['remove']> {
+    const stage = await this.prisma.stage.findFirst({
+      where: { id: stageId },
+      select: { id: true, escapeRoom: { select: { createdById: true } } },
+    })
+    if (stage.escapeRoom.createdById !== user.id) {
+      throw new ForbiddenException('You are not allowed to delete this stage.')
+    }
+
+    const deletedStage = await this.prisma.stage.delete({
+      where: { id: stage.id },
+      select: { id: true },
+    })
+
+    return {
+      status: HttpStatus.OK,
+      body: deletedStage,
     }
   }
 }

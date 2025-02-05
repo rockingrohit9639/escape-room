@@ -24,4 +24,12 @@ export class StageController {
   ): Promise<StageResponseShapes['new']> {
     return this.stageService.createNewStage(payload, thumbnail, user)
   }
+
+  @TsRest(c.remove)
+  async removeStage(
+    @TsRestRequest() { params }: StageRequestShapes['remove'],
+    @User() user: SessionUser,
+  ): Promise<StageResponseShapes['remove']> {
+    return this.stageService.removeStage(params.stageId, user)
+  }
 }

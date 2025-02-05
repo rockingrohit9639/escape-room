@@ -1,7 +1,8 @@
 import { useLoaderData } from '@tanstack/react-router'
-import { Edit2Icon, GalleryThumbnailsIcon } from 'lucide-react'
+import { Edit2Icon, GalleryThumbnailsIcon, TrashIcon } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import { cn } from '~/lib/utils'
+import RemoveStage from './remove-stage'
 
 type StageGridProps = {
   className?: string
@@ -20,6 +21,9 @@ export default function StageGrid({ className, style }: StageGridProps) {
 
             <div className="flex items-center gap-2">
               <Button className="text-muted-foreground" variant="ghost" size="icon-sm" icon={<Edit2Icon />} />
+              <RemoveStage stageId={stage.id}>
+                <Button variant="destructive-outline" size="icon-sm" icon={<TrashIcon />} />
+              </RemoveStage>
             </div>
           </div>
 

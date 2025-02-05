@@ -9,7 +9,7 @@ type StageSidebarProps = {
 
 export default function StageSidebar({ className, style }: StageSidebarProps) {
   return (
-    <div className={cn('p-4 size-full', className)} style={style}>
+    <div className={cn('p-4 size-full overflow-y-auto', className)} style={style}>
       <CreateNewStage />
       <StageGrid />
     </div>

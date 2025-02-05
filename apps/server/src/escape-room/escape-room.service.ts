@@ -53,6 +53,7 @@ export class EscapeRoomService {
           select: {
             id: true,
             label: true,
+            thumbnail: { select: { id: true, url: true } },
           },
         },
       },

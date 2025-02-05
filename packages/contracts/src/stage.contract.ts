@@ -44,6 +44,15 @@ export const stageContract = client.router(
         200: stageSchema,
       },
     },
+    remove: {
+      method: 'DELETE',
+      path: '/:stageId',
+      body: z.object({}),
+      pathParams: z.object({ stageId: z.string() }),
+      responses: {
+        200: stageSchema.pick({ id: true }),
+      },
+    },
   },
   { pathPrefix: '/stage' },
 )
