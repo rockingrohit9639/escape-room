@@ -2,7 +2,7 @@ import { BadRequestException, ForbiddenException, HttpStatus, Injectable } from 
 import { PrismaService } from '../prisma/prisma.service'
 import { SessionUser } from '../auth/auth.types'
 import { StageRequestShapes, StageResponseShapes } from './stage.types'
-import { newStageSchema } from '@escape-room/contracts'
+import { newStageSchema, stageContract } from '@escape-room/contracts'
 import { FileService } from '../file/file.service'
 
 @Injectable()
@@ -75,6 +75,23 @@ export class StageService {
     return {
       status: HttpStatus.OK,
       body: deletedStage,
+    }
+  }
+
+  async findAllByEscapeRoom(
+    escapeRoomId: string,
+    user: SessionUser,
+  ): Promise<StageResponseShapes['findAllByEscapeRoom']> {
+    const stages = await this.prisma.stage.findMany({
+      where: { escapeRoom: { id: escapeRoomId, createdById: user.id } },
+      include: {
+        thumbnail: { select: { id: true, url: true } },
+      },
+    })
+
+    return {
+      status: HttpStatus.OK,
+      body: stageContract.findAllByEscapeRoom.responses['200'].parse(stages),
     }
   }
 }

@@ -53,6 +53,14 @@ export const stageContract = client.router(
         200: stageSchema.pick({ id: true }),
       },
     },
+    findAllByEscapeRoom: {
+      method: 'GET',
+      path: '/escape-room/:escapeRoomId',
+      pathParams: z.object({ escapeRoomId: z.string() }),
+      responses: {
+        200: stageSchema.array(),
+      },
+    },
   },
   { pathPrefix: '/stage' },
 )

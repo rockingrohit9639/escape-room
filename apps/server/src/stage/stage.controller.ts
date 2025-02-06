@@ -32,4 +32,12 @@ export class StageController {
   ): Promise<StageResponseShapes['remove']> {
     return this.stageService.removeStage(params.stageId, user)
   }
+
+  @TsRest(c.findAllByEscapeRoom)
+  findAllByEscapeRoom(
+    @TsRestRequest() { params }: StageRequestShapes['findAllByEscapeRoom'],
+    @User() user: SessionUser,
+  ): Promise<StageResponseShapes['findAllByEscapeRoom']> {
+    return this.stageService.findAllByEscapeRoom(params.escapeRoomId, user)
+  }
 }

@@ -1,6 +1,6 @@
 import { newStageSchema } from '@escape-room/contracts'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useParams, useRouter } from '@tanstack/react-router'
+import { useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -15,20 +15,22 @@ import { apiClient } from '~/lib/client'
 import { handleError } from '~/lib/error'
 import { cn } from '~/lib/utils'
 import { omit } from 'radash'
+import { useQueryClient } from '@tanstack/react-query'
 
 type CreateNewStageProps = {
   className?: string
   style?: React.CSSProperties
   children: React.ReactNode
+  escapeRoomId: string
 }
 
 type CreateNewStageSchema = z.infer<typeof newStageSchema>
 
-export default function CreateNewStage({ className, style, children }: CreateNewStageProps) {
+export default function CreateNewStage({ className, style, children, escapeRoomId }: CreateNewStageProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const params = useParams({ from: '/builder/$escapeRoomId/' })
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const form = useForm<CreateNewStageSchema>({
     resolver: zodResolver(newStageSchema),
@@ -44,8 +46,11 @@ export default function CreateNewStage({ className, style, children }: CreateNew
     onError: handleError,
     onSuccess: () => {
       form.reset()
-      setIsOpen(false)
+      queryClient.invalidateQueries({
+        queryKey: ['stages', escapeRoomId],
+      })
       router.invalidate()
+      setIsOpen(false)
     },
   })
 
@@ -57,7 +62,7 @@ export default function CreateNewStage({ className, style, children }: CreateNew
         thumbnail: body.thumbnail,
         stageData: JSON.stringify(omit(body, ['thumbnail'])),
       },
-      params,
+      params: { escapeRoomId },
     })
   }
 

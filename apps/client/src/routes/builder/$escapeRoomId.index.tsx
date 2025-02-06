@@ -63,7 +63,7 @@ function EscapeRoomBuilder() {
 
         <p className="text-muted-foreground col-span-3">Stages</p>
 
-        <CreateNewStage>
+        <CreateNewStage escapeRoomId={id}>
           <button className="size-full border border-dashed flex items-center justify-center flex-col gap-2 rounded-md hover:bg-accent">
             <PlusIcon />
             <p>Add new stage</p>
