@@ -19,9 +19,10 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as AppImport } from './routes/_app'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
-import { Route as BuilderEscapeRoomIdImport } from './routes/builder/$escapeRoomId'
 import { Route as DashboardEscapeRoomIndexImport } from './routes/dashboard/escape-room/index'
+import { Route as BuilderEscapeRoomIdIndexImport } from './routes/builder/$escapeRoomId.index'
 import { Route as DashboardEscapeRoomNewImport } from './routes/dashboard/escape-room/new'
+import { Route as BuilderEscapeRoomIdStageIdImport } from './routes/builder/$escapeRoomId.$stageId'
 
 // Create Virtual Routes
 
@@ -76,16 +77,16 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   getParentRoute: () => AuthRoute,
 } as any).lazy(() => import('./routes/_auth/login.lazy').then((d) => d.Route))
 
-const BuilderEscapeRoomIdRoute = BuilderEscapeRoomIdImport.update({
-  id: '/$escapeRoomId',
-  path: '/$escapeRoomId',
-  getParentRoute: () => BuilderRoute,
-} as any)
-
 const DashboardEscapeRoomIndexRoute = DashboardEscapeRoomIndexImport.update({
   id: '/escape-room/',
   path: '/escape-room/',
   getParentRoute: () => DashboardRoute,
+} as any)
+
+const BuilderEscapeRoomIdIndexRoute = BuilderEscapeRoomIdIndexImport.update({
+  id: '/$escapeRoomId/',
+  path: '/$escapeRoomId/',
+  getParentRoute: () => BuilderRoute,
 } as any)
 
 const DashboardEscapeRoomNewRoute = DashboardEscapeRoomNewImport.update({
@@ -93,6 +94,14 @@ const DashboardEscapeRoomNewRoute = DashboardEscapeRoomNewImport.update({
   path: '/escape-room/new',
   getParentRoute: () => DashboardRoute,
 } as any)
+
+const BuilderEscapeRoomIdStageIdRoute = BuilderEscapeRoomIdStageIdImport.update(
+  {
+    id: '/$escapeRoomId/$stageId',
+    path: '/$escapeRoomId/$stageId',
+    getParentRoute: () => BuilderRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -133,13 +142,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
     }
-    '/builder/$escapeRoomId': {
-      id: '/builder/$escapeRoomId'
-      path: '/$escapeRoomId'
-      fullPath: '/builder/$escapeRoomId'
-      preLoaderRoute: typeof BuilderEscapeRoomIdImport
-      parentRoute: typeof BuilderImport
-    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -161,12 +163,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof DashboardImport
     }
+    '/builder/$escapeRoomId/$stageId': {
+      id: '/builder/$escapeRoomId/$stageId'
+      path: '/$escapeRoomId/$stageId'
+      fullPath: '/builder/$escapeRoomId/$stageId'
+      preLoaderRoute: typeof BuilderEscapeRoomIdStageIdImport
+      parentRoute: typeof BuilderImport
+    }
     '/dashboard/escape-room/new': {
       id: '/dashboard/escape-room/new'
       path: '/escape-room/new'
       fullPath: '/dashboard/escape-room/new'
       preLoaderRoute: typeof DashboardEscapeRoomNewImport
       parentRoute: typeof DashboardImport
+    }
+    '/builder/$escapeRoomId/': {
+      id: '/builder/$escapeRoomId/'
+      path: '/$escapeRoomId'
+      fullPath: '/builder/$escapeRoomId'
+      preLoaderRoute: typeof BuilderEscapeRoomIdIndexImport
+      parentRoute: typeof BuilderImport
     }
     '/dashboard/escape-room/': {
       id: '/dashboard/escape-room/'
@@ -193,11 +209,13 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface BuilderRouteChildren {
-  BuilderEscapeRoomIdRoute: typeof BuilderEscapeRoomIdRoute
+  BuilderEscapeRoomIdStageIdRoute: typeof BuilderEscapeRoomIdStageIdRoute
+  BuilderEscapeRoomIdIndexRoute: typeof BuilderEscapeRoomIdIndexRoute
 }
 
 const BuilderRouteChildren: BuilderRouteChildren = {
-  BuilderEscapeRoomIdRoute: BuilderEscapeRoomIdRoute,
+  BuilderEscapeRoomIdStageIdRoute: BuilderEscapeRoomIdStageIdRoute,
+  BuilderEscapeRoomIdIndexRoute: BuilderEscapeRoomIdIndexRoute,
 }
 
 const BuilderRouteWithChildren =
@@ -224,11 +242,12 @@ export interface FileRoutesByFullPath {
   '': typeof AuthRouteWithChildren
   '/builder': typeof BuilderRouteWithChildren
   '/dashboard': typeof DashboardRouteWithChildren
-  '/builder/$escapeRoomId': typeof BuilderEscapeRoomIdRoute
   '/login': typeof AuthLoginLazyRoute
   '/signup': typeof AuthSignupLazyRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/builder/$escapeRoomId/$stageId': typeof BuilderEscapeRoomIdStageIdRoute
   '/dashboard/escape-room/new': typeof DashboardEscapeRoomNewRoute
+  '/builder/$escapeRoomId': typeof BuilderEscapeRoomIdIndexRoute
   '/dashboard/escape-room': typeof DashboardEscapeRoomIndexRoute
 }
 
@@ -236,11 +255,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthRouteWithChildren
   '/builder': typeof BuilderRouteWithChildren
-  '/builder/$escapeRoomId': typeof BuilderEscapeRoomIdRoute
   '/login': typeof AuthLoginLazyRoute
   '/signup': typeof AuthSignupLazyRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/builder/$escapeRoomId/$stageId': typeof BuilderEscapeRoomIdStageIdRoute
   '/dashboard/escape-room/new': typeof DashboardEscapeRoomNewRoute
+  '/builder/$escapeRoomId': typeof BuilderEscapeRoomIdIndexRoute
   '/dashboard/escape-room': typeof DashboardEscapeRoomIndexRoute
 }
 
@@ -251,11 +271,12 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/builder': typeof BuilderRouteWithChildren
   '/dashboard': typeof DashboardRouteWithChildren
-  '/builder/$escapeRoomId': typeof BuilderEscapeRoomIdRoute
   '/_auth/login': typeof AuthLoginLazyRoute
   '/_auth/signup': typeof AuthSignupLazyRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/builder/$escapeRoomId/$stageId': typeof BuilderEscapeRoomIdStageIdRoute
   '/dashboard/escape-room/new': typeof DashboardEscapeRoomNewRoute
+  '/builder/$escapeRoomId/': typeof BuilderEscapeRoomIdIndexRoute
   '/dashboard/escape-room/': typeof DashboardEscapeRoomIndexRoute
 }
 
@@ -266,22 +287,24 @@ export interface FileRouteTypes {
     | ''
     | '/builder'
     | '/dashboard'
-    | '/builder/$escapeRoomId'
     | '/login'
     | '/signup'
     | '/dashboard/'
+    | '/builder/$escapeRoomId/$stageId'
     | '/dashboard/escape-room/new'
+    | '/builder/$escapeRoomId'
     | '/dashboard/escape-room'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
     | '/builder'
-    | '/builder/$escapeRoomId'
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/builder/$escapeRoomId/$stageId'
     | '/dashboard/escape-room/new'
+    | '/builder/$escapeRoomId'
     | '/dashboard/escape-room'
   id:
     | '__root__'
@@ -290,11 +313,12 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/builder'
     | '/dashboard'
-    | '/builder/$escapeRoomId'
     | '/_auth/login'
     | '/_auth/signup'
     | '/dashboard/'
+    | '/builder/$escapeRoomId/$stageId'
     | '/dashboard/escape-room/new'
+    | '/builder/$escapeRoomId/'
     | '/dashboard/escape-room/'
   fileRoutesById: FileRoutesById
 }
@@ -348,7 +372,8 @@ export const routeTree = rootRoute
     "/builder": {
       "filePath": "builder.tsx",
       "children": [
-        "/builder/$escapeRoomId"
+        "/builder/$escapeRoomId/$stageId",
+        "/builder/$escapeRoomId/"
       ]
     },
     "/dashboard": {
@@ -358,10 +383,6 @@ export const routeTree = rootRoute
         "/dashboard/escape-room/new",
         "/dashboard/escape-room/"
       ]
-    },
-    "/builder/$escapeRoomId": {
-      "filePath": "builder/$escapeRoomId.tsx",
-      "parent": "/builder"
     },
     "/_auth/login": {
       "filePath": "_auth/login.lazy.tsx",
@@ -375,9 +396,17 @@ export const routeTree = rootRoute
       "filePath": "dashboard/index.tsx",
       "parent": "/dashboard"
     },
+    "/builder/$escapeRoomId/$stageId": {
+      "filePath": "builder/$escapeRoomId.$stageId.tsx",
+      "parent": "/builder"
+    },
     "/dashboard/escape-room/new": {
       "filePath": "dashboard/escape-room/new.tsx",
       "parent": "/dashboard"
+    },
+    "/builder/$escapeRoomId/": {
+      "filePath": "builder/$escapeRoomId.index.tsx",
+      "parent": "/builder"
     },
     "/dashboard/escape-room/": {
       "filePath": "dashboard/escape-room/index.tsx",

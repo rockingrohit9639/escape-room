@@ -1,7 +1,6 @@
 import { newStageSchema } from '@escape-room/contracts'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useParams, useRouter } from '@tanstack/react-router'
-import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -20,14 +19,15 @@ import { omit } from 'radash'
 type CreateNewStageProps = {
   className?: string
   style?: React.CSSProperties
+  children: React.ReactNode
 }
 
 type CreateNewStageSchema = z.infer<typeof newStageSchema>
 
-export default function CreateNewStage({ className, style }: CreateNewStageProps) {
+export default function CreateNewStage({ className, style, children }: CreateNewStageProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const params = useParams({ from: '/builder/$escapeRoomId' })
+  const params = useParams({ from: '/builder/$escapeRoomId/' })
   const router = useRouter()
 
   const form = useForm<CreateNewStageSchema>({
@@ -63,11 +63,7 @@ export default function CreateNewStage({ className, style }: CreateNewStageProps
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <Button icon={<PlusIcon />} className="mb-4 w-full border-dashed" variant="outline">
-          New Stage
-        </Button>
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
 
       <SheetContent className={cn('min-w-[600px]', className)} style={style}>
         <SheetHeader className="mb-4">
