@@ -20,6 +20,7 @@ model User {
   salt     String
 
   sscapeRooms EscapeRoom[]
+  stages      Stage[]
   files       File[]
 }
 
@@ -91,6 +92,9 @@ model Stage {
 
   escapeRoom   EscapeRoom @relation(fields: [escapeRoomId], references: [id])
   escapeRoomId String     @db.ObjectId
+
+  createdBy   User   @relation(fields: [createdById], references: [id])
+  createdById String @db.ObjectId
 }
 
 enum FileVisibility {

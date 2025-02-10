@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, HttpStatus, Injectable } from '@nestjs/common'
+import { BadRequestException, ForbiddenException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { SessionUser } from '../auth/auth.types'
 import { StageRequestShapes, StageResponseShapes } from './stage.types'
@@ -14,6 +14,18 @@ export class StageService {
     thumbnail: Express.Multer.File,
     user: SessionUser,
   ): Promise<StageResponseShapes['new']> {
+    const escapeRoom = await this.prisma.escapeRoom.findUnique({
+      where: { id: params.escapeRoomId },
+      select: { createdById: true },
+    })
+    if (!escapeRoom) {
+      throw new NotFoundException('Escape room does not exists.')
+    }
+
+    if (escapeRoom.createdById !== user.id) {
+      throw new ForbiddenException('You are not allowed to add stage in this escape room.')
+    }
+
     const jsonBody = JSON.parse(JSON.parse(body.stageData))
     const response = newStageSchema.omit({ thumbnail: true }).safeParse(jsonBody)
 
@@ -40,15 +52,9 @@ export class StageService {
         background: payload.background,
         order: 0, // @TODO Calculate order
         timeLimit: payload.timeLimit,
-        escapeRoom: {
-          connect: {
-            id: params.escapeRoomId,
-            createdById: user.id,
-          },
-        },
-        thumbnail: {
-          connect: { id: thumbnailUploaded.id },
-        },
+        thumbnailId: thumbnailUploaded.id,
+        escapeRoomId: params.escapeRoomId,
+        createdById: user.id,
       },
     })
 
