@@ -1,0 +1,33 @@
+import { z } from 'zod'
+import { client } from './lib/client'
+
+const baseObject = z.object({
+  id: z.string(),
+  label: z.string(),
+  position: z.object({ x: z.number(), y: z.number() }),
+  rotation: z.number().default(0),
+  size: z.object({ width: z.number(), height: z.number() }),
+  scale: z.object({ width: z.string(), height: z.number() }).optional(),
+  disabled: z.boolean().default(false),
+  isDraggable: z.boolean().default(false),
+  isDroppable: z.boolean().default(false),
+})
+
+export const imageObject = baseObject.extend({
+  type: z.literal('IMAGE'),
+  data: z.object({ url: z.string().url() }),
+})
+
+export const audioObject = baseObject.extend({
+  type: z.literal('AUDIO'),
+  data: z.object({ url: z.string() }),
+})
+
+export const textObject = baseObject.extend({
+  type: z.literal('TEXT'),
+  data: z.object({ text: z.string().min(1) }),
+})
+
+export const stageObjectSchema = z.discriminatedUnion('type', [imageObject, audioObject, textObject])
+
+export const stageObjectContract = client.router({}, { pathPrefix: '/stage-object' })

@@ -5,6 +5,7 @@ import { userContract, userSchema } from './user.contract'
 import { escapeRoomTagContract, escapeRoomTagSchema } from './escape-room-tag.contract'
 import { stageContract, stageSchema, newStageSchema } from './stage.contract'
 import { fileContract } from './file.contract'
+import { imageObject, audioObject, textObject, stageObjectSchema, stageObjectContract } from './stage-object.contract'
 
 const contract = client.router({
   auth: authContract,
@@ -13,6 +14,7 @@ const contract = client.router({
   escapeRoomTag: escapeRoomTagContract,
   stage: stageContract,
   file: fileContract,
+  stageObject: stageObjectContract,
 })
 
 export {
@@ -28,4 +30,9 @@ export {
   stageSchema,
   fileContract,
   newStageSchema,
+  stageObjectContract,
+  imageObject,
+  audioObject,
+  textObject,
+  stageObjectSchema,
 }
