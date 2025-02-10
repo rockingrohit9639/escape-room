@@ -8,7 +8,10 @@ type StageObjectsSidebarProps = {
 export default function StageObjectsSidebar({ className, style }: StageObjectsSidebarProps) {
   return (
     <div
-      className={cn('w-80 border h-[calc(100vh_-_60px)] fixed left-8 top-1/2 -translate-y-1/2 rounded-xl', className)}
+      className={cn(
+        'w-80 border h-[calc(100vh_-_60px)] fixed left-8 top-1/2 -translate-y-1/2 rounded-xl bg-background',
+        className,
+      )}
       style={style}
     >
       <h1 className="p-4">ER</h1>

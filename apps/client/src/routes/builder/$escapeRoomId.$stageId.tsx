@@ -5,6 +5,7 @@ import { Button } from '~/components/ui/button'
 import { PlusIcon } from 'lucide-react'
 import StageObjectsSidebar from './-components/stage-objects-sidebar'
 import ObjectPropertiesSidebar from './-components/object-properties-sidebar'
+import Canvas from './-components/canvas'
 
 export const Route = createFileRoute('/builder/$escapeRoomId/$stageId')({
   component: StageEditor,
@@ -37,11 +38,7 @@ function StageEditor() {
       </div>
 
       <StageObjectsSidebar />
-
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border w-[750px] aspect-video">
-        Canvas
-      </div>
-
+      <Canvas />
       <ObjectPropertiesSidebar />
     </div>
   )
