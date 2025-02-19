@@ -25,7 +25,12 @@ export const audioObject = baseObject.extend({
 
 export const textObject = baseObject.extend({
   type: z.literal('TEXT'),
-  data: z.object({ text: z.string().min(1) }),
+  data: z.object({
+    text: z.string().min(1),
+    fontSize: z.number().default(16),
+    fill: z.string().startsWith('#').length(7).default('#FFFFFF'),
+    align: z.enum(['left', 'center', 'right']).default('left'),
+  }),
 })
 
 export const stageObjectSchema = z.discriminatedUnion('type', [imageObject, audioObject, textObject])

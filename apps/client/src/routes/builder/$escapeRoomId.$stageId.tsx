@@ -6,6 +6,7 @@ import { PlusIcon } from 'lucide-react'
 import StageObjectsSidebar from './-components/stage-objects-sidebar'
 import ObjectPropertiesSidebar from './-components/object-properties-sidebar'
 import Canvas from './-components/canvas'
+import Toolbar from './-components/toolbar'
 
 export const Route = createFileRoute('/builder/$escapeRoomId/$stageId')({
   component: StageEditor,
@@ -40,6 +41,7 @@ function StageEditor() {
       <StageObjectsSidebar />
       <Canvas />
       <ObjectPropertiesSidebar />
+      <Toolbar />
     </div>
   )
 }
