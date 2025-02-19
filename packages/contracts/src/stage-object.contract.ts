@@ -7,7 +7,7 @@ const baseObject = z.object({
   position: z.object({ x: z.number(), y: z.number() }),
   rotation: z.number().default(0),
   size: z.object({ width: z.number(), height: z.number() }),
-  scale: z.object({ width: z.string(), height: z.number() }).optional(),
+  scale: z.object({ width: z.number(), height: z.number() }).optional(),
   disabled: z.boolean().default(false),
   isDraggable: z.boolean().default(false),
   isDroppable: z.boolean().default(false),

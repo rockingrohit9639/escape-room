@@ -1,11 +1,10 @@
 import { LucideIcon, TextIcon } from 'lucide-react'
-import { stageObjectSchema } from '@escape-room/contracts'
-import { z } from 'zod'
+import { StageObject } from '~/types/store'
 
-export const TOOLS: Array<{
+export const TOOLBAR_OBJECTS: Array<{
   tooltip: string
   icon: LucideIcon
-  type: z.infer<typeof stageObjectSchema>['type']
+  type: StageObject['type']
 }> = [
   {
     tooltip: 'Add text',
