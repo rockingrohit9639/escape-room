@@ -1,5 +1,7 @@
 import { cn } from '~/lib/utils'
-import { Stage, Layer, Text } from 'react-konva'
+import { Stage, Layer } from 'react-konva'
+import { useStageStore } from '~/stores'
+import ObjectRenderer from './object-renderer'
 
 type CanvasProps = {
   className?: string
@@ -7,6 +9,8 @@ type CanvasProps = {
 }
 
 export default function Canvas({ className, style }: CanvasProps) {
+  const objects = useStageStore((store) => store.objects)
+
   return (
     <Stage
       className={cn('border fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2', className)}
@@ -15,7 +19,9 @@ export default function Canvas({ className, style }: CanvasProps) {
       height={450}
     >
       <Layer>
-        <Text text="This is canvas" fill="white" />
+        {objects.map((object) => (
+          <ObjectRenderer key={object.id} object={object} />
+        ))}
       </Layer>
     </Stage>
   )
