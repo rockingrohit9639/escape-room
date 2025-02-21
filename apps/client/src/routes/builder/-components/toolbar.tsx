@@ -20,7 +20,7 @@ export default function Toolbar({ className, style }: ToolbarProps) {
       )}
       style={style}
     >
-      <TooltipProvider>
+      <TooltipProvider delayDuration={0}>
         {TOOLBAR_OBJECTS.map((toolbarObject) => (
           <Tooltip key={toolbarObject.type}>
             <TooltipTrigger asChild>
@@ -34,7 +34,9 @@ export default function Toolbar({ className, style }: ToolbarProps) {
               />
             </TooltipTrigger>
 
-            <TooltipContent>{toolbarObject.tooltip}</TooltipContent>
+            <TooltipContent side="top" sideOffset={10}>
+              {toolbarObject.tooltip}
+            </TooltipContent>
           </Tooltip>
         ))}
       </TooltipProvider>

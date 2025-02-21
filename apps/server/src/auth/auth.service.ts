@@ -25,8 +25,8 @@ export class AuthService {
       throw new BadRequestException('Invalid credentials.')
     }
 
-    const hashedPassowrd = await bcrypt.hash(password, user.salt)
-    if (hashedPassowrd !== user.password) {
+    const hashedPassword = await bcrypt.hash(password, user.salt)
+    if (hashedPassword !== user.password) {
       throw new BadRequestException('Invalid credentials.')
     }
 

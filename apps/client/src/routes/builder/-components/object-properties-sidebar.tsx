@@ -2,6 +2,7 @@ import { cn } from '~/lib/utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { Button } from '~/components/ui/button'
 import { PlayIcon } from 'lucide-react'
+import PropertiesEditor from './properties-editor/properties-editor'
 
 type ObjectPropertiesSidebarProps = {
   className?: string
@@ -31,7 +32,9 @@ export default function ObjectPropertiesSidebar({ className, style }: ObjectProp
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="properties">Properties</TabsContent>
+      <TabsContent value="properties">
+        <PropertiesEditor />
+      </TabsContent>
       <TabsContent value="events">Events</TabsContent>
     </Tabs>
   )

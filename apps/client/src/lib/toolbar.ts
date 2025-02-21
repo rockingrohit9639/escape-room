@@ -1,4 +1,4 @@
-import { LucideIcon, TextIcon } from 'lucide-react'
+import { LucideIcon, TypeIcon } from 'lucide-react'
 import { StageObject } from '~/types/store'
 
 export const TOOLBAR_OBJECTS: Array<{
@@ -8,7 +8,7 @@ export const TOOLBAR_OBJECTS: Array<{
 }> = [
   {
     tooltip: 'Add text',
-    icon: TextIcon,
+    icon: TypeIcon,
     type: 'TEXT',
   },
 ]
