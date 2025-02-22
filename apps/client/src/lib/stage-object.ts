@@ -10,6 +10,7 @@ export function generateStageObject(type: StageObject['type']): StageObject {
     position: { x: 0, y: 0 },
     rotation: 0,
     size: { width: 100, height: 100 },
+    scale: { x: 1, y: 1 },
     disabled: false,
     isDraggable: false,
     isDroppable: false,

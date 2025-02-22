@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { client } from './lib/client'
 
-const baseObject = z.object({
+export const baseObject = z.object({
   id: z.string(),
   label: z.string(),
   position: z.object({ x: z.number(), y: z.number() }),

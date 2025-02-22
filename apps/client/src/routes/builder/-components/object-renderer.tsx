@@ -26,6 +26,7 @@ export default function ObjectRenderer({ object }: ObjectRendererProps) {
             fontSize={textObject.data.fontSize}
             fill={textObject.data.fill}
             align={textObject.data.align}
+            opacity={textObject.disabled ? 0.5 : 1}
           />
         ))
         .otherwise(() => null)}

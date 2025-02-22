@@ -32,7 +32,7 @@ export default function ObjectPropertiesSidebar({ className, style }: ObjectProp
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="properties">
+      <TabsContent value="properties" className="overflow-y-auto px-4 h-[calc(100%-120px)]">
         <PropertiesEditor />
       </TabsContent>
       <TabsContent value="events">Events</TabsContent>
