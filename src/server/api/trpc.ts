@@ -1,12 +1,21 @@
-import { initTRPC } from "@trpc/server";
+import { getAuth } from "@clerk/nextjs/server";
+import { initTRPC, TRPCError } from "@trpc/server";
+import { type NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
 
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+export const createTRPCContext = async ({
+  req,
+  ...opts
+}: {
+  headers: Headers;
+  req: NextRequest;
+}) => {
   return {
     db,
+    auth: getAuth(req),
     ...opts,
   };
 };
@@ -54,3 +63,21 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/**
+ * This middleware will make sure that the user is authenticated with clerk.
+ */
+const isAuthenticated = t.middleware(async ({ next, ctx }) => {
+  if (!ctx.auth?.userId) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "User is not authenticated.",
+    });
+  }
+
+  return next({ ctx });
+});
+
+export const protectedProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(isAuthenticated);
