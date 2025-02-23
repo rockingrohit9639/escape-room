@@ -46,6 +46,9 @@ export default function CreateNewEscapeRoom() {
   })
 
   const newEscapeRoomMutation = api.escapeRoom.new.useMutation({
+    onError: (error) => {
+      toast.error(error.message)
+    },
     onSuccess: (createdRoom) => {
       toast.success("Success.", {
         description:

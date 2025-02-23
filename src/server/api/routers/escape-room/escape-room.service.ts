@@ -18,3 +18,7 @@ export async function createNewEscapeRoom(
     },
   })
 }
+
+export async function findAllEscapeRooms(userId: string, db: PrismaClient) {
+  return db.escapeRoom.findMany({ where: { createdById: userId } })
+}
