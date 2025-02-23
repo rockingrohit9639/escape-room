@@ -15,7 +15,7 @@ const MENU_ITEMS = [
     label: "Dashboard",
   },
   {
-    to: "/dashboard/escape-room",
+    to: "/dashboard/escape-rooms",
     Icon: PuzzleIcon,
     label: "Your Rooms",
   },

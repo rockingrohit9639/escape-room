@@ -14,4 +14,38 @@ model User {
     clerkId   String   @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    escapeRooms EscapeRoom[]
+}
+
+enum RoomDifficulty {
+    EASY
+    MEDIUM
+    HARD
+}
+
+enum RoomStatus {
+    DRAFT
+    PUBLISHED
+}
+
+enum RoomVisibility {
+    PRIVATE
+    PUBLIC
+}
+
+model EscapeRoom {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    label       String
+    description String
+    difficulty  RoomDifficulty
+    status      RoomStatus     @default(DRAFT)
+    visibility  RoomVisibility @default(PUBLIC)
+    password    String? // a private room will have a password 
+
+    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdById String @db.ObjectId
 }
