@@ -7,8 +7,13 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+/**
+ * Authentication is managed by clerk.
+ * This model is to maintain the internal relationship between user and other models.
+ */
 model User {
-    id    String  @id @default(auto()) @map("_id") @db.ObjectId
-    email String  @unique
-    name  String?
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    clerkId   String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
