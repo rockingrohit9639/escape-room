@@ -2,6 +2,7 @@ import { type Metadata } from "next"
 import { api } from "~/trpc/server"
 import StageSelector from "./_components/stage-selector"
 import RemoveStage from "./_components/remove-stage"
+import ObjectsSidebar from "./_components/objects-sidebar"
 
 type BuilderProps = {
   params: Promise<{ escapeRoomId: string; stageId: string }>
@@ -19,6 +20,7 @@ export async function generateMetadata({ params }: BuilderProps): Promise<Metada
 
 export default async function Builder({ params }: BuilderProps) {
   const { escapeRoomId, stageId } = await params
+  const stage = await api.stage.findById(stageId)
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -26,6 +28,8 @@ export default async function Builder({ params }: BuilderProps) {
         <StageSelector escapeRoomId={escapeRoomId} />
         <RemoveStage stageId={stageId} />
       </div>
+
+      <ObjectsSidebar stage={stage.label} escapeRoom={stage.escapeRoom.label} />
     </div>
   )
 }

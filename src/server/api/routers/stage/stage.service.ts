@@ -50,6 +50,7 @@ export async function findAllEscapeRoomStages(
 export async function findStageById(stageId: string, userId: string, db: PrismaClient) {
   const stage = await db.stage.findUnique({
     where: { id: stageId, createdById: userId },
+    include: { escapeRoom: { select: { label: true } } },
   })
 
   if (!stage) {
