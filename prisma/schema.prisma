@@ -70,7 +70,7 @@ model Stage {
     createdById String @db.ObjectId
 }
 
-enum ObjectType {
+enum StageObjectType {
     IMAGE
     AUDIO
     TEXT
@@ -96,9 +96,9 @@ model StageObject {
     rotation    Float
     size        Size
     scale       Position?
-    disabled    Boolean    @default(false)
-    isDraggable Boolean    @default(false)
-    isDroppable Boolean    @default(false)
-    type        ObjectType
+    disabled    Boolean         @default(false)
+    isDraggable Boolean         @default(false)
+    isDroppable Boolean         @default(false)
+    type        StageObjectType
     data        Json
 }

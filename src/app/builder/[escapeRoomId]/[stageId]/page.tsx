@@ -3,7 +3,8 @@ import { api } from "~/trpc/server"
 import StageSelector from "./_components/stage-selector"
 import RemoveStage from "./_components/remove-stage"
 import ObjectsSidebar from "./_components/objects-sidebar"
-import ObjectPropertiesSidebar from "./_components/object-properties-sidebar/object-properties-sidebar"
+import ObjectPropertiesSidebar from "./_components/object-properties-sidebar"
+import Toolbar from "./_components/toolbar"
 
 type BuilderProps = {
   params: Promise<{ escapeRoomId: string; stageId: string }>
@@ -32,6 +33,7 @@ export default async function Builder({ params }: BuilderProps) {
 
       <ObjectsSidebar stage={stage.label} escapeRoom={stage.escapeRoom.label} />
       <ObjectPropertiesSidebar />
+      <Toolbar />
     </div>
   )
 }
