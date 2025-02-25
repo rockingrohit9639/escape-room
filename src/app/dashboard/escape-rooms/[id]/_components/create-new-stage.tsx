@@ -70,7 +70,7 @@ export default function CreateNewStage({
     },
     onSuccess: async () => {
       form.reset()
-      await utils.escapeRoom.findById.invalidate()
+      await utils.stage.findAll.invalidate(escapeRoomId)
       setIsOpen(false)
       toast.success("Stage created successfully.")
     },

@@ -36,3 +36,13 @@ export async function createStage(input: CreateStageSchema, userId: string, db: 
 
   return stage
 }
+
+export async function findAllEscapeRoomStages(
+  escapeRoomId: string,
+  userId: string,
+  db: PrismaClient,
+) {
+  return db.stage.findMany({
+    where: { escapeRoomId, createdById: userId },
+  })
+}

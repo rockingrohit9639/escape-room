@@ -4,6 +4,7 @@ import StatCard from "~/components/stat-card"
 import { ESCAPE_ROOM_DIFFICULTY_MAP, ESCAPE_ROOM_VISIBILITY_MAP } from "~/lib/escape-room"
 import { api } from "~/trpc/server"
 import CreateNewStage from "./_components/create-new-stage"
+import Stages from "./_components/stages"
 
 type EscapeRoomProps = {
   params: Promise<{ id: string }>
@@ -68,6 +69,8 @@ export default async function EscapeRoom({ params }: EscapeRoomProps) {
             <p>Add new stage</p>
           </button>
         </CreateNewStage>
+
+        <Stages escapeRoomId={id} />
       </div>
     </div>
   )
