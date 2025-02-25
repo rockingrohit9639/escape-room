@@ -46,3 +46,18 @@ export async function findAllEscapeRoomStages(
     where: { escapeRoomId, createdById: userId },
   })
 }
+
+export async function findStageById(stageId: string, userId: string, db: PrismaClient) {
+  const stage = await db.stage.findUnique({
+    where: { id: stageId, createdById: userId },
+  })
+
+  if (!stage) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "Stage not found or not allowed to you.",
+    })
+  }
+
+  return stage
+}

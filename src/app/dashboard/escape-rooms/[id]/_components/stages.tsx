@@ -32,7 +32,7 @@ export default function Stages({ className, style, escapeRoomId }: StagesProps) 
         >
           <Link
             className="flex size-full items-center justify-center bg-muted"
-            href={`/builder/${stage.id}`}
+            href={`/builder/${stage.escapeRoomId}/${stage.id}`}
           >
             {stage.label}
           </Link>

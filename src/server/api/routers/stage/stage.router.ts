@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { createTRPCRouter, protectedProcedure } from "../../trpc"
 import { createStageSchema } from "./stage.schema"
-import { createStage, findAllEscapeRoomStages } from "./stage.service"
+import { createStage, findAllEscapeRoomStages, findStageById } from "./stage.service"
 
 export const stageRouter = createTRPCRouter({
   new: protectedProcedure
@@ -10,4 +10,7 @@ export const stageRouter = createTRPCRouter({
   findAll: protectedProcedure
     .input(z.string())
     .query(({ input, ctx }) => findAllEscapeRoomStages(input, ctx.userId, ctx.db)),
+  findById: protectedProcedure
+    .input(z.string())
+    .query(({ input, ctx }) => findStageById(input, ctx.userId, ctx.db)),
 })
