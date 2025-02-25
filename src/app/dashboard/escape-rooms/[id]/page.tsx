@@ -1,8 +1,9 @@
-import { PercentCircleIcon, TimerIcon, UsersIcon } from "lucide-react"
+import { PercentCircleIcon, PlusIcon, TimerIcon, UsersIcon } from "lucide-react"
 import { type Metadata } from "next"
 import StatCard from "~/components/stat-card"
 import { ESCAPE_ROOM_DIFFICULTY_MAP, ESCAPE_ROOM_VISIBILITY_MAP } from "~/lib/escape-room"
 import { api } from "~/trpc/server"
+import CreateNewStage from "./_components/create-new-stage"
 
 type EscapeRoomProps = {
   params: Promise<{ id: string }>
@@ -60,6 +61,13 @@ export default async function EscapeRoom({ params }: EscapeRoomProps) {
         <StatCard icon={TimerIcon} label="Average completion time" value="40" />
 
         <p className="col-span-3 text-muted-foreground">Stages</p>
+
+        <CreateNewStage escapeRoomId={id}>
+          <button className="flex size-full min-h-40 flex-col items-center justify-center gap-2 rounded-md border border-dashed hover:bg-accent">
+            <PlusIcon />
+            <p>Add new stage</p>
+          </button>
+        </CreateNewStage>
       </div>
     </div>
   )
