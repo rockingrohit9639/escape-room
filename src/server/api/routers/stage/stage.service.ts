@@ -61,3 +61,22 @@ export async function findStageById(stageId: string, userId: string, db: PrismaC
 
   return stage
 }
+
+export async function removeStage(stageId: string, userId: string, db: PrismaClient) {
+  const stage = await db.stage.findUnique({
+    where: { id: stageId, createdById: userId },
+    select: { id: true },
+  })
+
+  if (!stage) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "Stage does not exists.",
+    })
+  }
+
+  return db.stage.delete({
+    where: { id: stage.id },
+    select: { id: true, escapeRoomId: true },
+  })
+}
