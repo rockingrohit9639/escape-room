@@ -16,7 +16,7 @@ export default function ObjectsSidebar({
   return (
     <div
       className={cn(
-        "fixed left-8 top-1/2 h-[calc(100vh_-_60px)] w-80 -translate-y-1/2 rounded-xl border bg-background",
+        "fixed left-8 top-1/2 z-[100] h-[calc(100vh_-_60px)] w-80 -translate-y-1/2 rounded-xl border bg-background",
         className,
       )}
       style={style}

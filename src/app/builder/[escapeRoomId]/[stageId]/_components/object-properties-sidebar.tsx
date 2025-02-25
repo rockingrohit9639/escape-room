@@ -15,7 +15,7 @@ export default function ObjectPropertiesSidebar({
   return (
     <Tabs
       className={cn(
-        "fixed right-8 top-1/2 h-[calc(100vh_-_60px)] w-80 -translate-y-1/2 overflow-hidden rounded-xl border bg-background",
+        "fixed right-8 top-1/2 z-[100] h-[calc(100vh_-_60px)] w-80 -translate-y-1/2 overflow-hidden rounded-xl border bg-background",
         className,
       )}
       style={style}

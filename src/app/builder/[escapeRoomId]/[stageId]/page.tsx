@@ -5,6 +5,7 @@ import RemoveStage from "./_components/remove-stage"
 import ObjectsSidebar from "./_components/objects-sidebar"
 import ObjectPropertiesSidebar from "./_components/object-properties-sidebar"
 import Toolbar from "./_components/toolbar"
+import Canvas from "./_components/canvas"
 
 type BuilderProps = {
   params: Promise<{ escapeRoomId: string; stageId: string }>
@@ -26,12 +27,13 @@ export default async function Builder({ params }: BuilderProps) {
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      <div className="absolute left-1/2 top-4 flex -translate-x-1/2 items-center gap-2">
+      <div className="absolute left-1/2 top-4 z-50 flex -translate-x-1/2 items-center gap-2">
         <StageSelector escapeRoomId={escapeRoomId} />
         <RemoveStage stageId={stageId} />
       </div>
 
       <ObjectsSidebar stage={stage.label} escapeRoom={stage.escapeRoom.label} />
+      <Canvas />
       <ObjectPropertiesSidebar />
       <Toolbar />
     </div>
