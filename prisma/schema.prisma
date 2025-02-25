@@ -69,3 +69,36 @@ model Stage {
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String @db.ObjectId
 }
+
+enum ObjectType {
+    IMAGE
+    AUDIO
+    TEXT
+}
+
+type Position {
+    x Float
+    y Float
+}
+
+type Size {
+    width  Float
+    height Float
+}
+
+model StageObject {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    label       String
+    position    Position
+    rotation    Float
+    size        Size
+    scale       Position?
+    disabled    Boolean    @default(false)
+    isDraggable Boolean    @default(false)
+    isDroppable Boolean    @default(false)
+    type        ObjectType
+    data        Json
+}
