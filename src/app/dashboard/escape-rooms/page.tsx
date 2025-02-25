@@ -25,7 +25,7 @@ export default function EscapeRooms() {
       {match(escapeRoomsQuery)
         .with({ status: "pending" }, () =>
           Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="col-span-2 h-16 w-full" />
+            <Skeleton key={i} className="col-span-2 h-28 w-full" />
           )),
         )
         .with({ status: "error" }, ({ error }) => <ErrorMessage description={error.message} />)
