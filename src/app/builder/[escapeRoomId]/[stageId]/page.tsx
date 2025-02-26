@@ -5,7 +5,7 @@ import RemoveStage from "./_components/remove-stage"
 import ObjectsSidebar from "./_components/objects-sidebar"
 import ObjectPropertiesSidebar from "./_components/object-properties-sidebar"
 import Toolbar from "./_components/toolbar"
-import Canvas from "./_components/canvas"
+import CanvasWrapper from "./_components/canvas-wrapper"
 
 type BuilderProps = {
   params: Promise<{ escapeRoomId: string; stageId: string }>
@@ -33,7 +33,7 @@ export default async function Builder({ params }: BuilderProps) {
       </div>
 
       <ObjectsSidebar stage={stage.label} escapeRoom={stage.escapeRoom.label} />
-      <Canvas />
+      <CanvasWrapper />
       <ObjectPropertiesSidebar />
       <Toolbar />
     </div>
