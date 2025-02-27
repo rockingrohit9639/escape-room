@@ -2,6 +2,7 @@ import { Button } from "~/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip"
 import { TOOLBAR_TOOLS } from "~/lib/toolbar"
 import { cn } from "~/lib/utils"
+import { useStageStore } from "~/stores"
 
 type ToolbarProps = {
   className?: string
@@ -9,6 +10,8 @@ type ToolbarProps = {
 }
 
 export default function Toolbar({ className, style }: ToolbarProps) {
+  const addObject = useStageStore((store) => store.addObject)
+
   return (
     <div
       className={cn(
@@ -21,7 +24,13 @@ export default function Toolbar({ className, style }: ToolbarProps) {
         {TOOLBAR_TOOLS.map((tool) => (
           <Tooltip key={String(tool.type)}>
             <TooltipTrigger asChild>
-              <Button icon={<tool.icon />} variant="ghost" />
+              <Button
+                icon={<tool.icon />}
+                variant="ghost"
+                onClick={() => {
+                  addObject(tool.type)
+                }}
+              />
             </TooltipTrigger>
 
             <TooltipContent side="top" sideOffset={10}>
