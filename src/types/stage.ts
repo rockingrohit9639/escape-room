@@ -1,9 +1,8 @@
-import type { StageObjectType, StageObject } from "@prisma/client"
-
-export type RawStageObject = Omit<StageObject, "createdAt" | "updatedAt">
+import type { StageObjectType } from "@prisma/client"
+import { type StageObject } from "~/server/api/routers/stage-object/stage-object.schema"
 
 export type StageStoreState = {
-  objects: RawStageObject[]
+  objects: StageObject[]
 }
 
 export type StageStoreActions = {

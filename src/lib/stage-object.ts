@@ -1,7 +1,7 @@
 import { type StageObjectType } from "@prisma/client"
 import { match } from "ts-pattern"
 import { v4 as uuid } from "uuid"
-import { type RawStageObject } from "~/types/stage"
+import { type StageObject } from "~/server/api/routers/stage-object/stage-object.schema"
 
 export function generateStageObject(type: StageObjectType) {
   const id = uuid()
@@ -18,7 +18,7 @@ export function generateStageObject(type: StageObjectType) {
   }
 
   return match(type)
-    .returnType<RawStageObject>()
+    .returnType<StageObject>()
     .with("TEXT", () => ({
       ...basicOptions,
       type: "TEXT",
