@@ -1,14 +1,21 @@
 import { Group, Text } from "react-konva"
 import { match } from "ts-pattern"
 import { type StageObject } from "~/server/api/routers/stage-object/stage-object.schema"
+import { useStageStore } from "~/stores"
 
 type StageObjectRenderer = {
   stageObject: StageObject
 }
 
 export default function StageObjectRenderer({ stageObject }: StageObjectRenderer) {
+  const setActiveObject = useStageStore((store) => store.setActiveObject)
+
   return (
-    <Group>
+    <Group
+      onClick={() => {
+        setActiveObject(stageObject)
+      }}
+    >
       {match(stageObject)
         .with({ type: "TEXT" }, (textObject) => (
           <Text

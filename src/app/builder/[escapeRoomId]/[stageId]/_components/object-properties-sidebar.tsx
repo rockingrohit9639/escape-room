@@ -2,6 +2,7 @@ import { PlayIcon } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import { cn } from "~/lib/utils"
+import PropertiesEditor from "./properties-editor/properties-editor"
 
 type ObjectPropertiesSidebarProps = {
   className?: string
@@ -41,7 +42,7 @@ export default function ObjectPropertiesSidebar({
       </TabsList>
 
       <TabsContent value="properties" className="h-[calc(100%-120px)] overflow-y-auto px-4">
-        Properties
+        <PropertiesEditor />
       </TabsContent>
       <TabsContent value="events">Events</TabsContent>
     </Tabs>
