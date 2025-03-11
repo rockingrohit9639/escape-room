@@ -5,6 +5,9 @@ import { type Metadata } from "next"
 import { TRPCReactProvider } from "~/trpc/react"
 import { ClerkProvider } from "@clerk/nextjs"
 import { ThemeProvider } from "~/components/theme-provider"
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
+import { extractRouterConfig } from "uploadthing/server"
+import { fileRouter } from "~/uploadthing/file-router"
 
 export const metadata: Metadata = {
   title: "Escape Room",
@@ -18,6 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <ClerkProvider>
       <html lang="en" className="font-body" suppressHydrationWarning>
         <body>
+          <NextSSRPlugin routerConfig={extractRouterConfig(fileRouter)} />
           <TRPCReactProvider>
             <ThemeProvider
               attribute="class"

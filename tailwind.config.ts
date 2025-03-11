@@ -1,7 +1,8 @@
 import { type Config } from "tailwindcss"
 import tailwindAnimate from "tailwindcss-animate"
+import { withUt } from "uploadthing/tw"
 
-export default {
+const tailwindConfig = {
   darkMode: ["class"],
   content: ["./src/**/*.tsx"],
   theme: {
@@ -72,3 +73,5 @@ export default {
   },
   plugins: [tailwindAnimate],
 } satisfies Config
+
+export default withUt(tailwindConfig)
