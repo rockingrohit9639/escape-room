@@ -55,7 +55,7 @@ export default function CreateNewEscapeRoom() {
           "Escape room created successfully. You can start editing your escape room now.",
       })
 
-      router.push(`/escaper-rooms/${createdRoom.id}`)
+      router.push(`/dashboard/escape-rooms/${createdRoom.id}`)
     },
   })
 

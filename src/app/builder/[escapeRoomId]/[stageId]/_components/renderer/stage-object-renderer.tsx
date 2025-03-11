@@ -1,7 +1,9 @@
-import { Group, Text } from "react-konva"
+import { Group } from "react-konva"
 import { match } from "ts-pattern"
 import { type StageObject } from "~/server/api/routers/stage-object/stage-object.schema"
 import { useStageStore } from "~/stores"
+import TextRenderer from "./text-renderer"
+import { useState } from "react"
 
 type StageObjectRenderer = {
   stageObject: StageObject
@@ -9,25 +11,23 @@ type StageObjectRenderer = {
 
 export default function StageObjectRenderer({ stageObject }: StageObjectRenderer) {
   const setActiveObject = useStageStore((store) => store.setActiveObject)
+  const [isHovered, setIsHovered] = useState(false)
 
   return (
     <Group
       onClick={() => {
         setActiveObject(stageObject)
       }}
+      onMouseEnter={() => {
+        setIsHovered(true)
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false)
+      }}
     >
       {match(stageObject)
         .with({ type: "TEXT" }, (textObject) => (
-          <Text
-            {...textObject.position}
-            rotation={textObject.rotation}
-            scale={textObject.scale}
-            text={textObject.data.text}
-            fontSize={textObject.data.fontSize}
-            fill={textObject.data.fill}
-            align={textObject.data.align}
-            opacity={textObject.disabled ? 0.5 : 1}
-          />
+          <TextRenderer textObject={textObject} isHovered={isHovered} />
         ))
         .otherwise(() => null)}
     </Group>

@@ -39,3 +39,4 @@ export const stageObjectSchema = z.discriminatedUnion("type", [
 ])
 
 export type StageObject = z.infer<typeof stageObjectSchema>
+export type ObjectByType<T extends StageObject["type"]> = Extract<StageObject, { type: T }>

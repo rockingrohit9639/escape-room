@@ -4,7 +4,7 @@ import { generateStageObject } from "~/lib/stage-object"
 import type { StageStoreActions, StageStoreState } from "~/types/stage"
 
 export const useStageStore = create<StageStoreState & StageStoreActions>()(
-  immer((set) => ({
+  immer((set, get) => ({
     // States
     objects: [],
     activeObject: undefined,
@@ -27,6 +27,9 @@ export const useStageStore = create<StageStoreState & StageStoreActions>()(
         const index = state.objects.findIndex((o) => o.id === stageObject.id)
         state.objects[index] = stageObject
       })
+    },
+    isActiveObject: (id) => {
+      return get().activeObject?.id === id
     },
   })),
 )

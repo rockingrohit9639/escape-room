@@ -9,6 +9,7 @@ export type StageStoreState = {
 
 export type StageStoreActions = {
   addObject: (type: StageObjectType) => void
-  setActiveObject: (stageObject: StageObject) => void
+  setActiveObject: (stageObject: StageObject | undefined) => void
   updateActiveObject: (stageObject: StageObject) => void
+  isActiveObject: (id: string) => boolean
 }
