@@ -4,6 +4,7 @@ import { type StageObject } from "~/server/api/routers/stage-object/stage-object
 import { useStageStore } from "~/stores"
 import TextRenderer from "./text-renderer"
 import { useState } from "react"
+import ImageRenderer from "./image-renderer"
 
 type StageObjectRenderer = {
   stageObject: StageObject
@@ -29,6 +30,7 @@ export default function StageObjectRenderer({ stageObject }: StageObjectRenderer
         .with({ type: "TEXT" }, (textObject) => (
           <TextRenderer textObject={textObject} isHovered={isHovered} />
         ))
+        .with({ type: "IMAGE" }, (imageObject) => <ImageRenderer imageObject={imageObject} />)
         .otherwise(() => null)}
     </Group>
   )

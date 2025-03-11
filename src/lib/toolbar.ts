@@ -1,5 +1,5 @@
 import { type StageObjectType } from "@prisma/client"
-import { TypeIcon, type LucideIcon } from "lucide-react"
+import { ImageIcon, TypeIcon, type LucideIcon } from "lucide-react"
 
 export const TOOLBAR_TOOLS: Array<{
   tooltip: string
@@ -10,5 +10,10 @@ export const TOOLBAR_TOOLS: Array<{
     tooltip: "Add text",
     icon: TypeIcon,
     type: "TEXT",
+  },
+  {
+    tooltip: "Add Image",
+    icon: ImageIcon,
+    type: "IMAGE",
   },
 ]

@@ -21,7 +21,7 @@ export function generateStageObject(type: StageObjectType) {
     .returnType<StageObject>()
     .with("TEXT", () => ({
       ...basicOptions,
-      type: "TEXT",
+      type: "TEXT" as const,
       label: "Text",
       data: {
         text: "Hello there",
@@ -29,6 +29,12 @@ export function generateStageObject(type: StageObjectType) {
         fill: "#FFFFFF",
         align: "left",
       },
+    }))
+    .with("IMAGE", () => ({
+      ...basicOptions,
+      type: "IMAGE" as const,
+      label: "Image",
+      data: { url: "/images/placeholder.jpg" },
     }))
     .otherwise(() => {
       throw new Error(`Unknown object type ${type}`)
